@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/game_name"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:gravity="center"
+        android:textSize="60sp"
+        android:textColor="#cc0000"
+        android:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/game_begin"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#cc0000"
+        android:layout_marginBottom="30dp"
+        android:text="@string/gameStart" />
+
+    <Button
+        android:id="@+id/game_continue"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#cc0000"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        android:text="@string/continueGame" />
+
+    <Button
+        android:id="@+id/game_select"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#cc0000"
+        android:layout_marginBottom="30dp"
+        android:text="@string/selectCheckpoint" />
+    <Button
+        android:id="@+id/game_quit"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#cc0000"
+        android:text="@string/quitGame"/>
+</LinearLayout>

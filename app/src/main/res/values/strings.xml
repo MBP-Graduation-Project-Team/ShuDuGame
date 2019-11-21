@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">标准数独</string>
+    <string name="gameStart">开始游戏</string>
+    <string name="continueGame">继续游戏</string>
+    <string name="selectCheckpoint">选择关卡</string>
+    <string name="quitGame">退出游戏</string>
+    <string name="checkpointNumber">第01关</string>
+    <string name="challengeSuccess">挑战成功</string>
+    <string name="theTime">解题时间</string>
+    <string name="bestTime">最佳时间</string>
+    <string name="nextPoint">下一关</string>
+    <string name="overText">恭喜你，全部通关完成！</string>
+    <string name="returnMain">返回主页</string>
+    <string name="challengeFailure">挑战失败</string>
+    <string name="challengeAgain">再次挑战</string>
+    <string name="restart">重新开始</string>
+    <string name="allPointNumber">1/16</string>
+</resources>

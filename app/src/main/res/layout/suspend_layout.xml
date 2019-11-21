@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffccaa"
+    >
+
+    <Button
+        android:id="@+id/game_continue"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#996600"
+        android:layout_marginBottom="30dp"
+        android:text="@string/continueGame"
+        android:layout_marginTop="100dp"/>
+
+    <Button
+        android:id="@+id/game_select"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#996600"
+        android:layout_marginBottom="30dp"
+        android:text="@string/selectCheckpoint" />
+    <Button
+        android:id="@+id/game_restart"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#996600"
+        android:layout_marginBottom="30dp"
+        android:text="@string/restart" />
+
+
+    <Button
+        android:id="@+id/return_main"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="25sp"
+        android:background="#996600"
+        android:text="@string/returnMain"/>
+</LinearLayout>

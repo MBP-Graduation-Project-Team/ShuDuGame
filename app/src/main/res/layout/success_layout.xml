@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffccaa">
+
+    <TextView
+        android:id="@+id/checkpoint_number"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="@string/checkpointNumber"
+        android:textSize="30sp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/challenge_success"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:text="@string/challengeSuccess"
+        android:textSize="50sp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/the_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/theTime"
+        android:textSize="30sp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/best_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/bestTime"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#ffff00"
+        android:layout_marginBottom="60dp"
+        />
+
+    <TextView
+        android:id="@+id/over_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/overText"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textColor="#ff0000"
+        android:layout_marginBottom="60dp"
+        />
+
+    <Button
+        android:id="@+id/next_point"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:text="@string/nextPoint"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="#996600"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Button
+        android:id="@+id/return_main"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:text="@string/returnMain"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="#996600"
+        />
+</LinearLayout>
