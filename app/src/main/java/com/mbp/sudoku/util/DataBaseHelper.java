@@ -23,10 +23,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     /**
      * 构造方法
-     * @param context
-     * @param name
-     * @param factory
-     * @param version
+     * @param context 上下文
+     * @param name 参数
+     * @param factory 参数
+     * @param version 版本号
      */
     public DataBaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
