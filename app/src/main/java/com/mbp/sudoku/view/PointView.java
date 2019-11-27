@@ -9,11 +9,15 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.mbp.sudoku.util.PointList;
+import com.mbp.sudoku.util.PointNumber;
+
 
 public class PointView extends View {
 
-    private Paint isPoint;
+    /**通关数/关卡数**/
+    private Paint levelNumber;
+    PointNumber pointNumber = new PointNumber();
+
 
     public PointView(Context context) {
         super(context);
@@ -30,22 +34,17 @@ public class PointView extends View {
         isView();
     }
     public void isView(){
-        isPoint =new Paint();
-        isPoint.setColor(Color.argb(255,255,255,255));
-        isPoint.setTextSize(100);
+        levelNumber =new Paint();
+        levelNumber.setColor(Color.argb(255,255,255,255));
+        levelNumber.setTextSize(100);
     }
     protected  void onMeasure(int widthMeasureSpec,int heightMeasureSpec){
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
         setMeasuredDimension(200,100);
 
     }
-    PointList pl=new PointList();
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
-        int number= pl.addList().size();
-        String str=number+"/9";
-        canvas.drawText(str,20,80,isPoint);
-
+        canvas.drawText(pointNumber.getPassNumber() + "/" + pointNumber.getCountNumber(),20,80, levelNumber);
     }
-
 }

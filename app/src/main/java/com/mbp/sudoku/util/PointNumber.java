@@ -1,7 +1,8 @@
 package com.mbp.sudoku.util;
 
 public class PointNumber {
-
+    private String passNumber;
+    private String countNumber;
 
     public String getText(int i, int j) {
         Integer index = 0;
@@ -14,7 +15,7 @@ public class PointNumber {
     }
     public int getPoint(int i, int j) {
 
-        int number = 3*i+j+1;;
+        int number = 3*i+j+1;
 
 
 
@@ -23,5 +24,19 @@ public class PointNumber {
         return number;
     }
 
+    public String getPassNumber() {
+        return passNumber;
+    }
 
+    public void setPassNumber(String passNumber) {
+        this.passNumber = passNumber;
+    }
+
+    public String getCountNumber() {
+        return countNumber;
+    }
+
+    public void setCountNumber(String countNumber) {
+        this.countNumber = countNumber;
+    }
 }

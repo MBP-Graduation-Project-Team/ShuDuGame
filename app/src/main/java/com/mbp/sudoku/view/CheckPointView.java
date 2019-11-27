@@ -17,50 +17,40 @@ import com.mbp.sudoku.R;
 import com.mbp.sudoku.util.PointNumber;
 import com.mbp.sudoku.util.PointList;
 
+/**
+ * 选择关卡界面
+ */
 public class CheckPointView extends View {
 
+    /**图标-锁**/
     private Paint lockBg;
     private Paint unlockNum;
     private Paint unlockBg;
     private Paint passedNum;
     private Paint passedTime;
     private Paint passedBg;
-    private Paint lock;
     private Bitmap lockPic;
     private int lockWidth,lockHeight;
-    private Rect lockSrcRect,lockDesRect;
-
+    PointList pointList = new PointList();
 
 
 
     public CheckPointView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context,attrs,defStyleAttr);
-
-
-
         initView();
-
-
-
-
     }
 
     public CheckPointView(Context context, @Nullable AttributeSet attrs) {
         super(context,attrs);
         initView();
-
-
     }
 
     public CheckPointView(Context context) {
         super(context);
         initView();
-
-
     }
 
     private void initView(){
-
         passedBg=new Paint();
         passedBg.setColor(Color.argb(225,137,207,240));
         passedNum=new Paint();
@@ -82,8 +72,6 @@ public class CheckPointView extends View {
         lockPic=BitmapFactory.decodeResource(getResources(), R.drawable.lock);
         lockWidth=lockPic.getWidth();
         lockHeight=lockPic.getHeight();
-
-
     }
 
 
@@ -102,57 +90,47 @@ public class CheckPointView extends View {
     int next_unlock_j;
     PointNumber pn=new PointNumber();
     PointList pl=new PointList();
+
+
     protected  void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+
+
         int width = 200;
         int height = 200;
         int poswidth=35;
         int posheight=30;
-
-
-
-        int next= pl.addList().size();
-
+        int next= pointList.getMapList().size();
 
         for(int k=next;k<=9;k++) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-
                     if (3 * i + j + 1 == next && k==next && next<=9) {
-
                         next_passed_i = i;
                         next_passed_j = j;
                          System.out.println("i:" + next_passed_i + "J=" + next_passed_j);
-
-
                     }
                     if (3 * i + j + 1 == next+1 && k==next+1  && next+1<=9) {
-
                         next_lock_i = i;
                         next_lock_j = j;
                          System.out.println("i:" + next_lock_i + "J=" + next_lock_j);
-
                     }
                     if (3 * i + j + 1 == next+2 && k==next+2 && next+2<=9) {
 
                         next_unlock_i = i;
                         next_unlock_j = j;
                          System.out.println("i:" + next_unlock_i + "J=" + next_unlock_j);
-
                     }
                 }
-
             }
-
         }
 
         for(int i=0;i<next_passed_i;i++){
             for(int j=0;j<3;j++){
-
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
                     canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
-
-                    canvas.drawText(pl.addList().get(pn.getPoint(i,j)-1).getTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
+                    canvas.drawText(pointList.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
                 }
             }
             for(int i=next_passed_i;i<next_passed_i+1;i++){
@@ -161,7 +139,7 @@ public class CheckPointView extends View {
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
                     canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
 
-                    canvas.drawText(pl.addList().get(pn.getPoint(i,j)-1).getTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
+                    canvas.drawText(pointList.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
                 }
             }
 
@@ -191,7 +169,6 @@ public class CheckPointView extends View {
                 }
             }
         }
-
     }
 
 
@@ -221,11 +198,9 @@ public class CheckPointView extends View {
              //   invalidate();
                 return true;
         }
-
         return super.onTouchEvent(event);
     }
 
-
-    }
+}
 
 

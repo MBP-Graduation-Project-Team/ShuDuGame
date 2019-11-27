@@ -19,7 +19,8 @@ import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.GenerateUtil;
 
 public class MainActivity extends AppCompatActivity {
-
+    //关卡编号
+    private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +28,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_layout);
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
-        //关卡编号
-        int id = 0;
+        /*Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
+
         if (cursor.moveToFirst()){
             do {
                 id = cursor.getInt(0);
                 Log.i("id", String.valueOf(id));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();*/
+        Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
+
+        if (cursor.moveToFirst()){
+            do {
+                String map = cursor.getString(1);
+                Log.i("map", map);
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        dataBaseHelper.getWritableDatabase();
 
-        /*for (int i = 0; i < 1; i++) {
+        /*for (int i = 0; i < 4; i++) {
             GenerateUtil generateUtil = new GenerateUtil();
             Gson gson = new Gson();
             int[][]a = TestU.getMap();

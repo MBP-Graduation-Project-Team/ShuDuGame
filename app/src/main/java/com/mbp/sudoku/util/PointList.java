@@ -1,14 +1,14 @@
 package com.mbp.sudoku.util;
 
-import com.mbp.sudoku.util.Map;
+import com.mbp.sudoku.entity.GameMapEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PointList {
 
+    private List<GameMapEntity> mapList;
 
-    public static List<Map>  addList(){
+    /*public static List<Map>  addList(){
         String time = "09:09";
         int point=3;
         List<Map> gameTime=new ArrayList<>();
@@ -17,13 +17,15 @@ public class PointList {
             map.setId(i+1);
             map.setTime(time);
             gameTime.add(map);
-
         }
-
-
-
         return gameTime;
+    }*/
+
+    public List<GameMapEntity> getMapList() {
+        return mapList;
     }
 
-
-   }
+    public void setMapList(List<GameMapEntity> mapList) {
+        this.mapList = mapList;
+    }
+}
