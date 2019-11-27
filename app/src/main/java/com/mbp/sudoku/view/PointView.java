@@ -42,9 +42,9 @@ public class PointView extends View {
     PointList pl=new PointList();
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
-       int number= pl.addList().size();
-       String str=number+"/9";
-       canvas.drawText(str,20,80,isPoint);
+        int number= pl.addList().size();
+        String str=number+"/9";
+        canvas.drawText(str,20,80,isPoint);
 
     }
 

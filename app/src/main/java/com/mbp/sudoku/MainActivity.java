@@ -25,10 +25,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        //开始游戏按钮
-        Button btn_start = findViewById(R.id.game_begin);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+        Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
+        //关卡编号
+        int id = 0;
+        if (cursor.moveToFirst()){
+            do {
+                id = cursor.getInt(0);
+                Log.i("id", String.valueOf(id));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
         //继续游戏按钮
         Button btn_continue = findViewById(R.id.game_continue);
+        //开始游戏按钮
+        Button btn_start = findViewById(R.id.game_begin);
+        if (id == 0){
+            btn_continue.setVisibility(View.INVISIBLE);
+        }
 
         //开始游戏按钮监听器
         btn_start.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
-        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+
+//        dataBaseHelper.getWritableDatabase();
 
         /*for (int i = 0; i < 1; i++) {
             GenerateUtil generateUtil = new GenerateUtil();
@@ -71,22 +86,7 @@ public class MainActivity extends AppCompatActivity {
             values.put("status", 0);
             database.insert("gamemap", null, values);
         }*/
-        /*Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
-        if (cursor.moveToFirst()){
-            do {
-                int id = cursor.getInt(0);
-                String gameMap = cursor.getString(1);
-                String mapStatus = cursor.getString(2);
-                String goodTime = cursor.getString(3);
-                int status = cursor.getInt(4);
-                Log.i("id", String.valueOf(id));
-                Log.i("gameMap", gameMap);
-                Log.i("mapStatus", mapStatus);
-                Log.i("goodTime", goodTime);
-                Log.i("status", String.valueOf(status));
-            }while (cursor.moveToNext());
-        }
-        cursor.close();*/
+
 //        database.delete("gamemap",null,null);
     }
 }
