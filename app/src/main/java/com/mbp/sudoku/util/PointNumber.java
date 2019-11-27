@@ -1,8 +1,8 @@
 package com.mbp.sudoku.util;
 
 public class PointNumber {
-    private String passNumber;
-    private String countNumber;
+    private static String passNumber;
+    private static String countNumber;
 
     public String getText(int i, int j) {
         Integer index = 0;

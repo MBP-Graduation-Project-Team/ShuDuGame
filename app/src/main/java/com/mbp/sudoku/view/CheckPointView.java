@@ -32,6 +32,7 @@ public class CheckPointView extends View {
     private Bitmap lockPic;
     private int lockWidth,lockHeight;
     PointList pointList = new PointList();
+    PointNumber pointNumber = new PointNumber();
 
 
 
@@ -101,7 +102,7 @@ public class CheckPointView extends View {
         int height = 200;
         int poswidth=35;
         int posheight=30;
-        int next= pointList.getMapList().size();
+        int next= Integer.valueOf(pointNumber.getPassNumber());
 
         for(int k=next;k<=9;k++) {
             for (int i = 0; i < 3; i++) {
@@ -155,6 +156,7 @@ public class CheckPointView extends View {
         if(next+2<10) {
             for (int i = next_unlock_i; i < next_unlock_i + 1; i++) {
                 for (int j = next_unlock_j; j < 3; j++) {
+
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, lockBg);
                     canvas.drawBitmap(lockPic, new Rect(0, 0, lockWidth * 10, lockHeight * 10), new Rect(j * (width + 100) + poswidth, i * (height + 100) + posheight, j * (width + 100) + poswidth + lockWidth, i * (height + 100) + posheight + lockHeight), null);
 

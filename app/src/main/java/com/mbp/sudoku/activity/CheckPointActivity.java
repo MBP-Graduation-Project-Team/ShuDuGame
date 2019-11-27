@@ -44,6 +44,6 @@ public class CheckPointActivity extends AppCompatActivity {
         pointList.setMapList(gameMapEntities);
         PointNumber pointNumber = new PointNumber();
         pointNumber.setCountNumber("9");
-        pointNumber.setPassNumber("3");
+        pointNumber.setPassNumber("9");
     }
 }
