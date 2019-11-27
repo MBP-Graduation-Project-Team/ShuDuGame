@@ -1,9 +1,6 @@
 package com.mbp.sudoku.test;
 
-import com.google.gson.Gson;
-import com.mbp.sudoku.util.GenerateUtil;
 
-import java.util.Arrays;
 
 public class TestU {
 
