@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mbp.sudoku.R;
 import com.mbp.sudoku.entity.GameMapEntity;
 import com.mbp.sudoku.util.DataBaseHelper;
-import com.mbp.sudoku.util.PointList;
 import com.mbp.sudoku.util.PointNumber;
 
 import java.util.ArrayList;
@@ -40,10 +39,8 @@ public class CheckPointActivity extends AppCompatActivity {
             }while (cursor.moveToNext());
         }
         cursor.close();
-        PointList pointList = new PointList();
-        pointList.setMapList(gameMapEntities);
-        PointNumber pointNumber = new PointNumber();
-        pointNumber.setCountNumber("9");
-        pointNumber.setPassNumber("9");
+        PointNumber.setMapList(gameMapEntities);
+        PointNumber.setCountNumber("9");
+        PointNumber.setPassNumber("9");
     }
 }

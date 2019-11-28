@@ -1,42 +1,45 @@
 package com.mbp.sudoku.util;
 
+import com.mbp.sudoku.entity.GameMapEntity;
+
+import java.util.List;
+
 public class PointNumber {
     private static String passNumber;
     private static String countNumber;
+    private static List<GameMapEntity> mapList;
+
 
     public String getText(int i, int j) {
-        Integer index = 0;
-
-        index = 3*i+j+1;
-
-        String text = index.toString();
-
-        return text;
+        int index = 3*i+j+1;
+        return Integer.toString(index);
     }
     public int getPoint(int i, int j) {
 
-        int number = 3*i+j+1;
-
-
-
-
-
-        return number;
+        return 3*i+j+1;
     }
 
-    public String getPassNumber() {
+    public static String getPassNumber() {
         return passNumber;
     }
 
-    public void setPassNumber(String passNumber) {
-        this.passNumber = passNumber;
+    public static void setPassNumber(String passNumber) {
+        PointNumber.passNumber = passNumber;
     }
 
-    public String getCountNumber() {
+    public static String getCountNumber() {
         return countNumber;
     }
 
-    public void setCountNumber(String countNumber) {
-        this.countNumber = countNumber;
+    public static void setCountNumber(String countNumber) {
+        PointNumber.countNumber = countNumber;
+    }
+
+    public static List<GameMapEntity> getMapList() {
+        return mapList;
+    }
+
+    public static void setMapList(List<GameMapEntity> mapList) {
+        PointNumber.mapList = mapList;
     }
 }

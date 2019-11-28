@@ -1,6 +1,7 @@
 package com.mbp.sudoku.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,8 +15,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.mbp.sudoku.R;
+import com.mbp.sudoku.activity.GameActivity;
 import com.mbp.sudoku.util.PointNumber;
-import com.mbp.sudoku.util.PointList;
 
 /**
  * 选择关卡界面
@@ -31,7 +32,6 @@ public class CheckPointView extends View {
     private Paint passedBg;
     private Bitmap lockPic;
     private int lockWidth,lockHeight;
-    PointList pointList = new PointList();
     PointNumber pointNumber = new PointNumber();
 
 
@@ -90,7 +90,6 @@ public class CheckPointView extends View {
     int next_unlock_i;
     int next_unlock_j;
     PointNumber pn=new PointNumber();
-    PointList pl=new PointList();
 
 
     protected  void onDraw(Canvas canvas) {
@@ -131,7 +130,7 @@ public class CheckPointView extends View {
             for(int j=0;j<3;j++){
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
                     canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
-                    canvas.drawText(pointList.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
+                    canvas.drawText(PointNumber.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
                 }
             }
             for(int i=next_passed_i;i<next_passed_i+1;i++){
@@ -140,7 +139,7 @@ public class CheckPointView extends View {
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
                     canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
 
-                    canvas.drawText(pointList.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
+                    canvas.drawText(PointNumber.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
                 }
             }
 
@@ -189,6 +188,7 @@ public class CheckPointView extends View {
                         if (x >= j*(width+100) && x <= j*(width+100)+width && y >= i*(height+100) && y <= i*(height+100)+height) {
                             num =3*i+j+1;
                             System.out.println(num);
+//                            Intent intent = new Intent(CheckPointView.this, GameActivity.class);
                         //    invalidate();
                             return true;
                         }

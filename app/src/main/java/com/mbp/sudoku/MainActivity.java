@@ -2,33 +2,32 @@ package com.mbp.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.Gson;
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
-import com.mbp.sudoku.test.TestU;
-import com.mbp.sudoku.util.DataBaseHelper;
-import com.mbp.sudoku.util.GenerateUtil;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
-    //关卡编号
-    private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+        initDatabase();
+        /*DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        /*Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
+        int id = 0;
+        Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
 
         if (cursor.moveToFirst()){
             do {
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             }while (cursor.moveToNext());
         }
         cursor.close();*/
-        Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
+        /*Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
 
         if (cursor.moveToFirst()){
             do {
@@ -45,37 +44,29 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("map", map);
             }while (cursor.moveToNext());
         }
-        cursor.close();
+        cursor.close();*/
         //继续游戏按钮
         Button btn_continue = findViewById(R.id.game_continue);
         //开始游戏按钮
         Button btn_start = findViewById(R.id.game_begin);
-        if (id == 0){
+        //关卡编号
+        /*if (id == 0){
             btn_continue.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         //开始游戏按钮监听器
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CheckPointActivity.class);
-                startActivity(intent);
-            }
+        btn_start.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CheckPointActivity.class);
+            startActivity(intent);
         });
 
         //继续游戏按钮监听器
-        btn_continue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+        btn_continue.setOnClickListener(v -> {
+            new Thread(() -> {
 
-                    }
-                }).start();
-                Intent intent = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(intent);
-            }
+            }).start();
+            Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            startActivity(intent);
         });
 
 
@@ -97,5 +88,59 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
 //        database.delete("gamemap",null,null);
+
+
+
+    }
+
+    void initDatabase(){
+        // com.test.db 是程序的包名，请根据自己的程序调整
+        // /data/data/com.test.db/
+        // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
+        // 数据库名为 test.db
+        String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
+        String DB_NAME = "sudoku.db";
+
+        // 检查 SQLite 数据库文件是否存在
+        if ((new File(DB_PATH + DB_NAME)).exists() == false) {
+            // 如 SQLite 数据库文件不存在，再检查一下 database 目录是否存在
+            File f = new File(DB_PATH);
+            // 如 database 目录不存在，新建该目录
+            if (!f.exists()) {
+                f.mkdir();
+            }
+
+            try {
+                // 得到 assets 目录下我们实现准备好的 SQLite 数据库作为输入流
+                InputStream is = getBaseContext().getAssets().open(DB_NAME);
+                // 输出流
+                OutputStream os = new FileOutputStream(DB_PATH + DB_NAME);
+
+                // 文件写入
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+
+                // 关闭文件流
+                os.flush();
+                os.close();
+                is.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // 下面测试 /data/data/com.test.db/databases/ 下的数据库是否能正常工作
+        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        Cursor cursor = database.rawQuery("select * from gamemap", null);
+
+        if (cursor.moveToFirst()){
+            do {
+                String map = cursor.getString(1);
+                Log.i("map", map);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 }
