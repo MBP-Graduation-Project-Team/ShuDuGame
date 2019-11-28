@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 
 /**数据库帮助类**/
-public class DataBaseHelper extends SQLiteOpenHelper {
+public class     DataBaseHelper extends SQLiteOpenHelper {
 
     private Context dbContext;
 
@@ -50,7 +50,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        db.execSQL(CREATE__GAMEMAP);
+        db.execSQL(CREATE__GAMEMAP);
         db.execSQL(CREATE__GAMESPEED);
         db.execSQL(CREATE__GAMEENDSPEED);
         Toast.makeText(dbContext,"create success", Toast.LENGTH_SHORT).show();

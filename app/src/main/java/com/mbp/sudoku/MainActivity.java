@@ -7,10 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
+import com.mbp.sudoku.util.DataBaseHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         // 下面测试 /data/data/com.test.db/databases/ 下的数据库是否能正常工作
-        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+       /* SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
         Cursor cursor = database.rawQuery("select * from gamemap", null);
 
         if (cursor.moveToFirst()){
@@ -141,6 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("map", map);
             }while (cursor.moveToNext());
         }
-        cursor.close();
+        cursor.close();*/
     }
 }

@@ -19,7 +19,6 @@ public class TestU {
     private static boolean isOk = true;
 
     /*
-     * 得到数独地图数组
      */
     public static int[][] getMap() {
         //判断是否已经完成地图的生成，要是没有完成就重新生成。
