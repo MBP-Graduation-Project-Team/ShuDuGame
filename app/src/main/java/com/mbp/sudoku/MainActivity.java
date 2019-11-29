@@ -2,7 +2,6 @@ package com.mbp.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,15 +12,12 @@ import android.widget.Button;
 
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
-import com.mbp.sudoku.test.TestU;
 import com.mbp.sudoku.util.DataBaseHelper;
-import com.mbp.sudoku.util.GenerateUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 

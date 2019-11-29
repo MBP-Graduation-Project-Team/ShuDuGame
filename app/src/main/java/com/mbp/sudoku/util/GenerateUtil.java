@@ -14,9 +14,7 @@ import java.util.Random;
  */
 public class GenerateUtil {
     private static final int SIZE = 9;
-//    private static final int CELL_SIZE = 3;
     private static final int LEVEL_MAX = 10;
-//    private int[][] suduAry = new int[SIZE][SIZE];
 
     //数独地图数组
     private static int[][] maps = new int[9][9];
@@ -27,68 +25,6 @@ public class GenerateUtil {
     //是否已经完成地图的生成
     private static boolean isOk = true;
 
-
-    private static int floorDiv(int x, int y) {
-        int r = x / y;
-        if ((x ^ y) < 0 && (r * y != x)) {
-            r--;
-        }
-        return r;
-    }
-
-    /**
-     * 生成数独
-     * @param level 难度级别 1~10
-     * @return int[][]
-     */
-//    public GameMapEntity generate(int level) {
-//        Random random = new Random();
-//        int n = random.nextInt(9) + 1;
-//        for(int i=0;i<SIZE;i++) {
-//            for(int j=0;j<SIZE;j++) {
-//                int p = floorDiv(i, CELL_SIZE);
-//                int q = floorDiv(j, CELL_SIZE);
-//                for(int k=0;k<SIZE;k++) {
-//                    if(checkColumn(n, j) && checkRow(n, i) && checkNineCells(n, p, q)) {
-//                        suduAry[i][j] = n;
-//                        break;
-//                    } else {
-//                        n = n % SIZE + 1;
-//                    }
-//                }
-//            }
-//            n = n % SIZE + 1;
-//        }
-//        upset();
-//        GameMapEntity gameMap = new GameMapEntity();
-//        maskCells(suduAry);
-//        return gameMap;
-//    }
-    /**
-     * 生成数独
-     * @return int[][]
-     */
-//    public int[][] generate() {
-//        Random random = new Random();
-//        int n = random.nextInt(9) + 1;
-//        for(int i=0;i<SIZE;i++) {
-//            for(int j=0;j<SIZE;j++) {
-//                int p = floorDiv(i, CELL_SIZE);
-//                int q = floorDiv(j, CELL_SIZE);
-//                for(int k=0;k<SIZE;k++) {
-//                    if(checkColumn(n, j) && checkRow(n, i) && checkNineCells(n, p, q)) {
-//                        suduAry[i][j] = n;
-//                        break;
-//                    } else {
-//                        n = n % SIZE + 1;
-//                    }
-//                }
-//            }
-//            n = n % SIZE + 1;
-//        }
-//        upset();
-//        return suduAry;
-//    }
 
     public int[][] maskCells(int[][] suduAry) {
         int level = 1;
@@ -125,97 +61,11 @@ public class GenerateUtil {
         return suduAry;
     }
 
-    /**
-     * 随机打乱顺序
-     *//*
-    private void upset() {
-        Random random = new Random();
-        //按行交换
-        for(int i=0;i<SIZE;i++) {
-            int n = random.nextInt(CELL_SIZE);
-            int p = random.nextInt(CELL_SIZE) * CELL_SIZE + n;
-            for(int j=0;j<SIZE;j++) {
-                int tmp = suduAry[i][j];
-                suduAry[i][j] = suduAry[p][j];
-                suduAry[p][j] = tmp;
-            }
-        }
-        //按列交换
-        for(int i=0;i<SIZE;i++) {
-            int n = random.nextInt(CELL_SIZE);
-            int p = random.nextInt(CELL_SIZE) * CELL_SIZE + n;
-            for(int j=0;j<SIZE;j++) {
-                int tmp = suduAry[j][i];
-                suduAry[j][i] = suduAry[j][p];
-                suduAry[j][p] = tmp;
-            }
-        }
-    }
-
-    *//**
-     * 检查某行
-     * @param n
-     * @param row
-     * @return
-     *//*
-    private  boolean checkRow(int n, int row) {
-        boolean result = true;
-
-        for(int i=0;i<SIZE;i++) {
-            if(suduAry[row][i] == n) {
-                result = false;
-                break;
-            }
-        }
-
-        return result;
-    }
-    *//**
-     * 检查某列
-     * @param n
-     * @param col
-     * @return
-     *//*
-    private boolean checkColumn(int n, int col) {
-        boolean result = true;
-        for(int i=0;i<SIZE;i++) {
-            if(suduAry[i][col] == n) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-    *//**
-     * 检查小九宫格
-     * @param n
-     * @param x
-     * @param y
-     * @return
-     *//*
-    private boolean checkNineCells(int n, int x, int y) {
-        boolean result = true;
-        int sx = x * 3, sy = y * 3;
-
-        for(int i=sx; i<sx+3;i++) {
-            for(int j=sy;j<sy+3;j++) {
-                if(suduAry[i][j] == n) {
-                    result = false;
-                    break;
-                }
-            }
-            if(!result) break;
-        }
-
-        return result;
-    }*/
-
 
     /*
      * 得到数独地图数组
      */
-    public static int[][] getMap() {
+    public int[][] getMap() {
         //判断是否已经完成地图的生成，要是没有完成就重新生成。
         //从这里就可以看出算法还有待优化，如果回溯的好的话就一直可以通过回溯来重新生成，而这里是通过重新执行生成算法来重新生成。希望感兴趣的朋友可以去实现以下。
         do{
