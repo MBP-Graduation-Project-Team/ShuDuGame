@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-//        initDatabase();
+        initDatabase();
         DataBaseHelper    dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         int id = 0;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         //继续游戏按钮监听器
         btn_continue.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            intent.putExtra("gameType","continue");
             startActivity(intent);
         });
     }
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
         // 数据库名为 test.db
         String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
-        String DB_NAME = "new.db";
+        String DB_NAME = "sudoku.db";
 
         // 检查 SQLite 数据库文件是否存在
         if ((new File(DB_PATH + DB_NAME)).exists() == false) {

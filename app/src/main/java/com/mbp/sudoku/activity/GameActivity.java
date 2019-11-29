@@ -31,9 +31,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Intent gameIntent = getIntent();
-        String gameType = gameIntent.getStringExtra("");
+        String gameType = gameIntent.getStringExtra("gameType");
         int level = gameIntent.getIntExtra("level",1);
-        getGameMap(level);
+        if ("continue".equals(gameType)){
+            Log.d("GameActivity","继续游戏!");
+        }
+        if ("new".equals(gameType)){
+            getGameMap(level);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
         timeShow = findViewById(R.id.game_time);

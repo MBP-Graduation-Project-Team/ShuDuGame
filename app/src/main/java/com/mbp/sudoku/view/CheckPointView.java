@@ -192,6 +192,7 @@ public class CheckPointView extends View {
                             Log.d("CheckPointView num:", String.valueOf(num));
                             Intent intent = new Intent(getContext(), GameActivity.class);
                             intent.putExtra("level",num);
+                            intent.putExtra("gameType","new");
                             getContext().startActivity(intent);
                         }
                     }
