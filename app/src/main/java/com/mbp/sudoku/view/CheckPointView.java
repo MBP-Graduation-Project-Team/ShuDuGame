@@ -123,29 +123,35 @@ public class CheckPointView extends View {
                 }
             }
         }
+        if(next!=0){
+        for(int i=0;i<next_passed_i;i++) {
+            for (int j = 0; j < 3; j++) {
+                canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
+                canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
+                canvas.drawText(PointNumber.getMapList().get(pn.getPoint(i, j) - 1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
 
-        for(int i=0;i<next_passed_i;i++){
-            for(int j=0;j<3;j++){
+            }
+        }
+
+            for(int i=next_passed_i;i<next_passed_i+1;i++) {
+                for (int j = 0; j < next_passed_j + 1; j++) {
+
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
                     canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
-                    canvas.drawText(PointNumber.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
-                }
+
+                    canvas.drawText(PointNumber.getMapList().get(pn.getPoint(i, j) - 1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
+
             }
-            for(int i=next_passed_i;i<next_passed_i+1;i++){
-                for(int j=0;j<next_passed_j+1;j++){
-
-                    canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, passedBg);
-                    canvas.drawText(pn.getText(i, j), j * (width + 100) + 70, i * (height + 100) + 100, passedNum);
-
-                    canvas.drawText(PointNumber.getMapList().get(pn.getPoint(i,j)-1).getGoodTime(), j * (width + 100) + 40, i * (height + 100) + 170, passedTime);
-                }
+            }
             }
 
-        if(next+1<9) {
+
+        if(next+1<10) {
             for (int i = next_lock_i; i < next_lock_i + 1; i++) {
                 for (int j = next_lock_j; j < next_lock_j + 1; j++) {
                     canvas.drawRect(j * (width + 100), i * (height + 100), j * (width + 100) + width, i * (height + 100) + height, unlockBg);
                     canvas.drawText(pn.getText(i, j), j * (width + 100) + 60, i * (height + 100) + 150, unlockNum);
+
 
                 }
             }
