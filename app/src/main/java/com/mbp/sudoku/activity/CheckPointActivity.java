@@ -55,6 +55,6 @@ public class CheckPointActivity extends AppCompatActivity {
         Cursor cursor2 = database.rawQuery("select * from gamemap where status = ?",new String[]{"1"});
         Log.d("count",String.valueOf(cursor2.getCount()));
         cursor2.close();
-        PointNumber.setPassNumber("9");
+        PointNumber.setPassNumber("0");
     }
 }

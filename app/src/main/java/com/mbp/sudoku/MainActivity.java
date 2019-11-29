@@ -24,14 +24,13 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    private DataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.main_layout);
 //        initDatabase();
-        /*DataBaseHelper    dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+        DataBaseHelper    dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         int id = 0;
         Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
@@ -42,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("id", String.valueOf(id));
             }while (cursor.moveToNext());
         }
-        cursor.close();*/
+        cursor.close();
 
         //继续游戏按钮
         Button btn_continue = findViewById(R.id.game_continue);
         //开始游戏按钮
         Button btn_start = findViewById(R.id.game_begin);
         //关卡编号
-        /*if (id == 0){
+        if (id == 0){
             btn_continue.setVisibility(View.INVISIBLE);
-        }*/
+        }
 
         //开始游戏按钮监听器
         btn_start.setOnClickListener(v -> {
@@ -61,37 +60,14 @@ public class MainActivity extends AppCompatActivity {
 
         //继续游戏按钮监听器
         btn_continue.setOnClickListener(v -> {
-            new Thread(() -> {
-
-            }).start();
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
             startActivity(intent);
         });
-
-
-//        dataBaseHelper.getWritableDatabase();
-
-        /*for (int i = 0; i < 4; i++) {
-            GenerateUtil generateUtil = new GenerateUtil();
-            Gson gson = new Gson();
-            int[][]a = TestU.getMap();
-            String firstMap = gson.toJson(a);
-            int[][]b = generateUtil.maskCells(a);
-            String gameMap = gson.toJson(b);
-            ContentValues values = new ContentValues();
-            values.put("gameMap", firstMap);
-            values.put("mapStatus", gameMap);
-            values.put("goodTime", "");
-            values.put("status", 0);
-            database.insert("gamemap", null, values);
-        }*/
-
-//        database.delete("gamemap",null,null);
-
-
-
     }
 
+    /**
+     *
+     */
     void initDatabase(){
         // com.test.db 是程序的包名，请根据自己的程序调整
         // /data/data/com.test.db/

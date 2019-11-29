@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -89,7 +90,7 @@ public class CheckPointView extends View {
     int next_lock_j;
     int next_unlock_i;
     int next_unlock_j;
-    PointNumber pn=new PointNumber();
+    PointNumber pn = new PointNumber();
 
 
     protected  void onDraw(Canvas canvas) {
@@ -101,7 +102,7 @@ public class CheckPointView extends View {
         int height = 200;
         int poswidth=35;
         int posheight=30;
-        int next= Integer.valueOf(pointNumber.getPassNumber());
+        int next= Integer.valueOf(PointNumber.getPassNumber());
 
         for(int k=next;k<=9;k++) {
             for (int i = 0; i < 3; i++) {
@@ -109,18 +110,18 @@ public class CheckPointView extends View {
                     if (3 * i + j + 1 == next && k==next && next<=9) {
                         next_passed_i = i;
                         next_passed_j = j;
-                         System.out.println("i:" + next_passed_i + "J=" + next_passed_j);
+//                         System.out.println("i:" + next_passed_i + "J=" + next_passed_j);
                     }
                     if (3 * i + j + 1 == next+1 && k==next+1  && next+1<=9) {
                         next_lock_i = i;
                         next_lock_j = j;
-                         System.out.println("i:" + next_lock_i + "J=" + next_lock_j);
+//                         System.out.println("i:" + next_lock_i + "J=" + next_lock_j);
                     }
                     if (3 * i + j + 1 == next+2 && k==next+2 && next+2<=9) {
 
                         next_unlock_i = i;
                         next_unlock_j = j;
-                         System.out.println("i:" + next_unlock_i + "J=" + next_unlock_j);
+//                         System.out.println("i:" + next_unlock_i + "J=" + next_unlock_j);
                     }
                 }
             }
@@ -172,13 +173,14 @@ public class CheckPointView extends View {
         }
     }
 
-
     public boolean onTouchEvent (MotionEvent event){
-        int num=0;
+        int num;
         int width = 200;
         int height = 200;
         switch (event.getAction()){
             case MotionEvent.ACTION_MOVE:
+            case MotionEvent.ACTION_UP:
+                break;
             case MotionEvent.ACTION_DOWN:
                 //canvas.drawRect(j*(width+100),i*(height+100),j*(width+100)+width,i*(height+100)+height,unlockBg);
                 float x=event.getX();
@@ -187,22 +189,17 @@ public class CheckPointView extends View {
                     for (int j = 0; j < 3; j++) {
                         if (x >= j*(width+100) && x <= j*(width+100)+width && y >= i*(height+100) && y <= i*(height+100)+height) {
                             num =3*i+j+1;
-                            System.out.println(num);
-//                            Intent intent = new Intent(CheckPointView.this, GameActivity.class);
-                        //    invalidate();
-                            return true;
+                            Log.d("CheckPointView num:", String.valueOf(num));
+                            Intent intent = new Intent(getContext(), GameActivity.class);
+                            intent.putExtra("level",num);
+                            getContext().startActivity(intent);
                         }
                     }
                 }
                 break;
-            case MotionEvent.ACTION_UP:
-
-             //   invalidate();
-                return true;
         }
         return super.onTouchEvent(event);
     }
-
 }
 
 

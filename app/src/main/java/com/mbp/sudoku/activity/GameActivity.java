@@ -41,12 +41,7 @@ public class GameActivity extends AppCompatActivity {
             int cnt = 0;
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        timeShow.setText(getStringTime(cnt++));
-                    }
-                });
+                runOnUiThread(() -> timeShow.setText(getStringTime(cnt++)));
             }
         };
         timer.schedule(timerTask,0,1000);
@@ -97,6 +92,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * 获取游戏地图
+     * @param level 关卡编号
      */
     public void getGameMap(int level){
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"test.db",null,1);
@@ -121,5 +117,4 @@ public class GameActivity extends AppCompatActivity {
         }
         cursor.close();
     }
-
 }
