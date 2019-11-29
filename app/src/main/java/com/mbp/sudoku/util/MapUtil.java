@@ -41,42 +41,42 @@ public class MapUtil {
     }
 
     /** 判断该坐标有哪些数不可用 */
-    public int[] getFalseData(int x, int y){
-        Set<Integer> set = new TreeSet<>();
-        // 检查X 轴有哪些不能点
-        for (int i = 0; i < 9; i++) {
-            int d = gameMap[y][i];
-            if (d!=0) {
-                set.add(d);
-            }
-        }
-        // 检查 y 轴有哪些不能点
-        for (int i = 0; i < 9; i++) {
-            int d = gameMap[i][x];
-            if (d!=0) {
-                set.add(d);
-            }
-        }
-        // 检查 3*3 方格哪些不能点
-        x = x/3*3;
-        y = y/3*3;
-        for (int i = x; i < x+3; i++) {
-            for (int j = y; j < y+3; j++) {
-                int d = gameMap[j][i];
-                if (d!=0) {
-                    set.add(d);
-                }
-            }
-        }
-        Integer[] arr2 = set.toArray(new Integer[0]);
-        // 数组的包装类型不能转 只能自己转；吧Integer转为为int数组；
-        int[] result = new int[arr2.length];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = arr2[i];
-        }
-        System.out.println("false Number ： "+Arrays.toString(result));
-        return result;
-    }
+//    public int[] getFalseData(int x, int y){
+//        Set<Integer> set = new TreeSet<>();
+//        // 检查X 轴有哪些不能点
+//        for (int i = 0; i < 9; i++) {
+//            int d = gameMap[y][i];
+//            if (d!=0) {
+//                set.add(d);
+//            }
+//        }
+//        // 检查 y 轴有哪些不能点
+//        for (int i = 0; i < 9; i++) {
+//            int d = gameMap[i][x];
+//            if (d!=0) {
+//                set.add(d);
+//            }
+//        }
+//        // 检查 3*3 方格哪些不能点
+//        x = x/3*3;
+//        y = y/3*3;
+//        for (int i = x; i < x+3; i++) {
+//            for (int j = y; j < y+3; j++) {
+//                int d = gameMap[j][i];
+//                if (d!=0) {
+//                    set.add(d);
+//                }
+//            }
+//        }
+//        Integer[] arr2 = set.toArray(new Integer[0]);
+//        // 数组的包装类型不能转 只能自己转；吧Integer转为为int数组；
+//        int[] result = new int[arr2.length];
+//        for (int i = 0; i < result.length; i++) {
+//            result[i] = arr2[i];
+//        }
+//        System.out.println("false Number ： "+Arrays.toString(result));
+//        return result;
+//    }
 
     /** 当前棋盘数据 */
     public void initCutData(){

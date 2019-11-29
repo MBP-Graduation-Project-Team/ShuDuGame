@@ -2,6 +2,7 @@ package com.mbp.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,32 +13,43 @@ import android.widget.Button;
 
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
+import com.mbp.sudoku.test.TestU;
 import com.mbp.sudoku.util.DataBaseHelper;
+import com.mbp.sudoku.util.GenerateUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    private DataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TestU tu=new TestU();
+        int a[][]=tu.getMap();
+        System.out.println("地图1"+Arrays.deepToString(a));
+        GenerateUtil gu=new GenerateUtil();
+        gu.maskCells(a);
+        String aa=Arrays.deepToString(gu.maskCells(a));
+        System.out.println("地图2"+Arrays.deepToString(gu.maskCells(a)));
         setContentView(R.layout.main_layout);
-        initDatabase();
-        /*DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
-        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        int id = 0;
-        Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
+      //  initDatabase();
+//        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+//        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+        dbHelper=new DataBaseHelper(this,"new.db",null,2);
+        SQLiteDatabase database =dbHelper.getWritableDatabase();
+        ContentValues values =new ContentValues();
 
-        if (cursor.moveToFirst()){
-            do {
-                id = cursor.getInt(0);
-                Log.i("id", String.valueOf(id));
-            }while (cursor.moveToNext());
-        }
-        cursor.close();*/
+        values.put("gameMap",aa);
+        database.insert("gamemap",null,values);
+        values.clear();
+
+       // initDatabase();
+//        System.out.println(Arrays.deepToString(gu.maskCells(a)));
         /*Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
 
         if (cursor.moveToFirst()){
@@ -101,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
         // 数据库名为 test.db
         String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
-        String DB_NAME = "sudoku.db";
+        String DB_NAME = "new.db";
 
         // 检查 SQLite 数据库文件是否存在
         if ((new File(DB_PATH + DB_NAME)).exists() == false) {

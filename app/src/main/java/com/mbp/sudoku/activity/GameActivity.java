@@ -98,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
      * 获取游戏地图
      */
     public void getGameMap(){
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"new.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery("select * from gamemap where id = ?",new String[]{"12"});
         if (cursor.moveToFirst()){
