@@ -100,7 +100,7 @@ public class CheckPointView extends View {
 
         int width = 200;
         int height = 200;
-        int poswidth=35;
+        int poswidth =35;
         int posheight=30;
         int next= Integer.valueOf(PointNumber.getPassNumber());
 
