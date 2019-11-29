@@ -100,7 +100,7 @@ public class GameActivity extends AppCompatActivity {
      * @param level 关卡编号
      */
     public void getGameMap(int level){
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery("select * from gamemap where id = ?",new String[]{String.valueOf(level)});
         if (cursor.moveToFirst()){

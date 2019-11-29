@@ -32,7 +32,7 @@ public class CheckPointActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
         List<GameMapEntity> gameMapEntities = new ArrayList<>();
