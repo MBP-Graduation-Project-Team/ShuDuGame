@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.AdminActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,6 @@
         <activity android:name=".activity.AdminGenerateActivity" />
         <activity android:name=".activity.AdminOperateActivity" />
         <activity android:name=".activity.AdminSelectActivity" />
-        <!--        <activity android:name=".activity.AdminActivity" />-->
     </application>
 
 </manifest>

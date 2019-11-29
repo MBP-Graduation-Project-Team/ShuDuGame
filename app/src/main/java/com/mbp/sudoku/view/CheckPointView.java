@@ -33,9 +33,6 @@ public class CheckPointView extends View {
     private Paint passedBg;
     private Bitmap lockPic;
     private int lockWidth,lockHeight;
-    PointNumber pointNumber = new PointNumber();
-
-
 
     public CheckPointView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context,attrs,defStyleAttr);

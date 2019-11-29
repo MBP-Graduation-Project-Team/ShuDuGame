@@ -16,7 +16,7 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_layout);
         //生成关卡按钮
-        Button button1 = findViewById(R.id.btn_generate);
+        Button button1 = findViewById(R.id.btn_toGenerate);
         //操作关卡按钮
         Button button2 = findViewById(R.id.btn_operate);
         //查看关卡按钮

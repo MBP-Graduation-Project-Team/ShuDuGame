@@ -1,5 +1,6 @@
 package com.mbp.sudoku.activity;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,14 +12,17 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.mbp.sudoku.R;
+import com.mbp.sudoku.test.TestU;
 import com.mbp.sudoku.util.DataBaseHelper;
+import com.mbp.sudoku.util.GenerateUtil;
 
 public class AdminGenerateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_layout);
+        setContentView(R.layout.generate_layout);
         Button button1 = findViewById(R.id.btn_generate);
         EditText editText1 = findViewById(R.id.level_number);
         button1.setOnClickListener(view -> {
@@ -28,10 +32,10 @@ public class AdminGenerateActivity extends AppCompatActivity {
             }
             else {
                 //创建数据库
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"test.db",null,1);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
                 SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
                 //插入数据
-                /*for (int i = 0; i < levelNumber; i++) {
+                for (int i = 0; i < levelNumber; i++) {
                     GenerateUtil generateUtil = new GenerateUtil();
                     Gson gson = new Gson();
                     int[][]a = TestU.getMap();
@@ -44,7 +48,7 @@ public class AdminGenerateActivity extends AppCompatActivity {
                     values.put("goodTime", "");
                     values.put("status", 0);
                     database.insert("gamemap", null, values);
-                }*/
+                }
 
                 Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
 
