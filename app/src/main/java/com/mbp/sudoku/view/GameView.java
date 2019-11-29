@@ -44,6 +44,12 @@ public class GameView extends View {
     private int mOptBoard;
     /** 数字Y轴偏移量 **/
     private float tCY;
+    /** 错误数量统计 **/
+    private Paint errorNumberCountPaint;
+    /** 错误数量 **/
+    private int errorCount = 0;
+
+    private int layout_y = 120;
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -118,16 +124,22 @@ public class GameView extends View {
         mOptDarkPaint = new Paint();
         mOptDarkPaint.setColor(Color.parseColor("#52E76E"));
         mOptDarkPaint.setStyle(Paint.Style.FILL);
+
+        errorNumberCountPaint = new Paint();
+        errorNumberCountPaint.setTextSize(cellWidth * 0.5f);
+        errorNumberCountPaint.setColor(Color.BLACK);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(phoneWidth, phoneWidth + cellWidth +20);
+        setMeasuredDimension(phoneWidth, phoneWidth + cellWidth + layout_y);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        canvas.drawText("错误数量:"+ errorCount +"/2",phoneWidth / 2 - cellWidth,50,errorNumberCountPaint);
 
         drawBoard(canvas);
         //当前点击横坐标
@@ -137,7 +149,7 @@ public class GameView extends View {
         //判断是否为答题区
         if (gameMap.getOnClicked(x,y)){
             // 画出棋盘选择框
-            canvas.drawRect(x * cellWidth +22, y * cellWidth +22, x * cellWidth +20 + cellWidth, y * cellWidth +20 + cellWidth, mOptDarkPaint);
+            canvas.drawRect(x * cellWidth + 22, y * cellWidth + layout_y + 2, x * cellWidth + 20 + cellWidth, y * cellWidth + layout_y + cellWidth, mOptDarkPaint);
         }
 
         // 画出当前棋盘数据
@@ -146,11 +158,11 @@ public class GameView extends View {
                 int cutData = gameMap.getCutData(i, j);
                 //画正确数字
                 if (gameMap.getOnClicked(i,j) && cutData > 0) {
-                    canvas.drawText(Integer.toString(cutData), i * cellWidth + tCX+20, j* cellWidth + cellWidth - tCY+20, changePaint);
+                    canvas.drawText(Integer.toString(cutData), i * cellWidth + tCX + 20, j* cellWidth + cellWidth - tCY + layout_y, changePaint);
                 }
                 //画错误数字
                 if (gameMap.getOnClicked(i,j) && cutData > 0 && !gameMap.judgeNumber(i,j,cutData)){
-                    canvas.drawText(Integer.toString(cutData), i * cellWidth + tCX+20, j* cellWidth + cellWidth - tCY+20, errorNumberPaint);
+                    canvas.drawText(Integer.toString(cutData), i * cellWidth + tCX + 20, j* cellWidth + cellWidth - tCY + layout_y, errorNumberPaint);
                 }
             }
         }
@@ -166,7 +178,7 @@ public class GameView extends View {
     private void drawTrueText(Canvas canvas) {
 
         // 画平行四边形
-        float startY = phoneWidth + 30;
+        float startY = phoneWidth + layout_y;
         canvas.drawLine(50, startY, phoneWidth -50, startY, mLinePaint);
         canvas.drawLine(10, startY + cellWidth - 40, phoneWidth -10, startY + cellWidth -40, mLinePaint);
         canvas.drawLine(50, startY, 10, startY + cellWidth - 40, mLinePaint);
@@ -175,7 +187,7 @@ public class GameView extends View {
         //画出候选区文字
         float y = (cellWidth - 30)/2.0f;
         for (int i = 0; i < 9; i++) {
-            canvas.drawText(Integer.toString(i + 1), i * cellWidth + tCX+ 20, startY + (cellWidth - tCY) - y, mOptPaint);
+            canvas.drawText(Integer.toString(i + 1), i * cellWidth + tCX + 20, startY + (cellWidth - tCY) - y, mOptPaint);
         }
     }
 
@@ -190,26 +202,26 @@ public class GameView extends View {
                 int x = i / 3;
                 int y = j / 3;
                 if ((x == 0 || x == 2) && (y == 0 || y == 2)) {
-                    canvas.drawRect(cellWidth * j + 20, 20 + cellWidth * i, cellWidth * j + 20 + cellWidth, 20 + cellWidth * i + cellWidth, mDarkPaint);
+                    canvas.drawRect(cellWidth * j + 20, layout_y + cellWidth * i, cellWidth * j + 20 + cellWidth, layout_y + cellWidth * i + cellWidth, mDarkPaint);
                 } else if (y == 1 && x == 1) {
-                    canvas.drawRect(cellWidth * j + 20, 20 + cellWidth * i, cellWidth * j + 20 + cellWidth, 20 + cellWidth * i + cellWidth, mDarkPaint);
+                    canvas.drawRect(cellWidth * j + 20, layout_y + cellWidth * i, cellWidth * j + 20 + cellWidth, layout_y + cellWidth * i + cellWidth, mDarkPaint);
                 }
             }
         }
 
         // 画白线
         for (int i = 0; i < 10; i++) {
-            canvas.drawLine(20, cellWidth * i + 1 + 20, 9 * cellWidth + 20,
-                    cellWidth * i + 1 + 20, mLinePaint);
-            canvas.drawLine(cellWidth * i + 1 + 20, 20, cellWidth * i + 1
-                    + 20, 9 * cellWidth + 20, mLinePaint);
+            canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,
+                    cellWidth * i + 1 + layout_y, mLinePaint);
+            canvas.drawLine(cellWidth * i + 1 + 20, layout_y, cellWidth * i + 1
+                    + 20, 9 * cellWidth + layout_y, mLinePaint);
         }
 
         //画初始数字
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!gameMap.getOnClicked(i, j)) {
-                    canvas.drawText(gameMap.getText(i, j), i * cellWidth + 20 + tCX, cellWidth * j + 20 + cellWidth - tCY, numberPaint);
+                    canvas.drawText(gameMap.getText(i, j), i * cellWidth + 20 + tCX, cellWidth * j + layout_y + cellWidth - tCY, numberPaint);
                 }
             }
         }
@@ -234,7 +246,7 @@ public class GameView extends View {
         //当前点击的横坐标
         int choX = (int) ((event.getX() - 20) / cellWidth);
         //当前点击的纵坐标
-        int choY = (int) ((event.getY() - 20) / cellWidth);
+        int choY = (int) ((event.getY() - layout_y) / cellWidth);
 
         Log.i("坐标值：", "("+ choX +","+ choY +")");
 
@@ -253,6 +265,7 @@ public class GameView extends View {
                 Log.i("","填入数字正确");
             }
             else {
+                errorCount ++;
                 Log.i("","填入数字错误");
             }
 

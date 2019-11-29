@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.mbp.sudoku.R;
-import com.mbp.sudoku.test.TestU;
 import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.GenerateUtil;
 
@@ -38,7 +37,7 @@ public class AdminGenerateActivity extends AppCompatActivity {
                 for (int i = 0; i < levelNumber; i++) {
                     GenerateUtil generateUtil = new GenerateUtil();
                     Gson gson = new Gson();
-                    int[][]a = TestU.getMap();
+                    int[][]a = generateUtil.getMap();
                     String firstMap = gson.toJson(a);
                     int[][]b = generateUtil.maskCells(a);
                     String gameMap = gson.toJson(b);
