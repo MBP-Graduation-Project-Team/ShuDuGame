@@ -26,6 +26,10 @@
         <activity android:name=".activity.CheckPointActivity"/>
 
         <activity android:name=".activity.GameActivity"/>
+        <activity android:name=".activity.AdminGenerateActivity" />
+        <activity android:name=".activity.AdminOperateActivity" />
+        <activity android:name=".activity.AdminSelectActivity" />
+        <!--        <activity android:name=".activity.AdminActivity" />-->
     </application>
 
 </manifest>

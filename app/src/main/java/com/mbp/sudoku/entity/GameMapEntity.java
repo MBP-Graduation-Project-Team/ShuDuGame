@@ -50,4 +50,15 @@ public class GameMapEntity {
     public void setGoodTime(String goodTime) {
         this.goodTime = goodTime;
     }
+
+    @Override
+    public String toString() {
+        return "GameMapEntity{" +
+                "id=" + id +
+                ", gameMap='" + gameMap + '\'' +
+                ", mapStatus='" + mapStatus + '\'' +
+                ", goodTime='" + goodTime + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

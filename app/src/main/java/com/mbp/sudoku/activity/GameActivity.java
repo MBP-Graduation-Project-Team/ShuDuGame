@@ -32,7 +32,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Intent gameIntent = getIntent();
         String gameType = gameIntent.getStringExtra("");
-        getGameMap();
+        int level = gameIntent.getIntExtra("level",1);
+        getGameMap(level);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
         timeShow = findViewById(R.id.game_time);
@@ -97,10 +98,10 @@ public class GameActivity extends AppCompatActivity {
     /**
      * 获取游戏地图
      */
-    public void getGameMap(){
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+    public void getGameMap(int level){
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"test.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Cursor cursor = database.rawQuery("select * from gamemap where id = ?",new String[]{"12"});
+        Cursor cursor = database.rawQuery("select * from gamemap where id = ?",new String[]{String.valueOf(level)});
         if (cursor.moveToFirst()){
             do {
                 int id = cursor.getInt(0);

@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        initDatabase();
-        /*DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
+//        initDatabase();
+        /*DataBaseHelper    dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         int id = 0;
         Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);

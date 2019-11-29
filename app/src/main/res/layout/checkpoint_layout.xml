@@ -13,13 +13,7 @@
         android:layout_marginTop="20dp"
         android:background="@android:drawable/ic_menu_revert"
         android:gravity="center" />
-<!--       <TextView-->
-<!--        android:id="@+id/all_point"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="300dp"-->
-<!--        android:text="@string/allPointNumber"-->
-<!--        android:textSize="30sp" />-->
+
 
     <com.mbp.sudoku.view.PointView
         android:layout_width="wrap_content"
