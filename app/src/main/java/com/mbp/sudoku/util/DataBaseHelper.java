@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 
 /**数据库帮助类**/
-public class     DataBaseHelper extends SQLiteOpenHelper {
+public class DataBaseHelper extends SQLiteOpenHelper {
 
     private Context dbContext;
 

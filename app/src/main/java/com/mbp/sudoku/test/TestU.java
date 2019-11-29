@@ -1,6 +1,9 @@
 package com.mbp.sudoku.test;
 
 
+import com.mbp.sudoku.util.GenerateUtil;
+
+import java.util.Arrays;
 
 public class TestU {
 
@@ -151,5 +154,15 @@ public class TestU {
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        TestU tu=new TestU();
+        int a[][]=tu.getMap();
+
+        System.out.println(Arrays.deepToString(a));
+        GenerateUtil gu=new GenerateUtil();
+        gu.maskCells(a);
+        System.out.println(Arrays.deepToString(gu.maskCells(a)));
     }
 }

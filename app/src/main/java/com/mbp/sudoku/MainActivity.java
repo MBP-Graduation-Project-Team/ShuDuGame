@@ -2,6 +2,7 @@ package com.mbp.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,19 +13,23 @@ import android.widget.Button;
 
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
+import com.mbp.sudoku.test.TestU;
 import com.mbp.sudoku.util.DataBaseHelper;
+import com.mbp.sudoku.util.GenerateUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    private DataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_layout);
+
 //        initDatabase();
         /*DataBaseHelper    dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,2);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
@@ -38,15 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }while (cursor.moveToNext());
         }
         cursor.close();*/
-        /*Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
 
-        if (cursor.moveToFirst()){
-            do {
-                String map = cursor.getString(1);
-                Log.i("map", map);
-            }while (cursor.moveToNext());
-        }
-        cursor.close();*/
         //继续游戏按钮
         Button btn_continue = findViewById(R.id.game_continue);
         //开始游戏按钮
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
         // 数据库名为 test.db
         String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
-        String DB_NAME = "sudoku.db";
+        String DB_NAME = "new.db";
 
         // 检查 SQLite 数据库文件是否存在
         if ((new File(DB_PATH + DB_NAME)).exists() == false) {
@@ -133,16 +130,5 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        // 下面测试 /data/data/com.test.db/databases/ 下的数据库是否能正常工作
-       /* SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        Cursor cursor = database.rawQuery("select * from gamemap", null);
-
-        if (cursor.moveToFirst()){
-            do {
-                String map = cursor.getString(1);
-                Log.i("map", map);
-            }while (cursor.moveToNext());
-        }
-        cursor.close();*/
     }
 }
