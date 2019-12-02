@@ -29,6 +29,9 @@
         <activity android:name=".activity.AdminGenerateActivity" />
         <activity android:name=".activity.AdminOperateActivity" />
         <activity android:name=".activity.AdminSelectActivity" />
+        <activity android:name=".activity.GameSuccessActivity" />
+        <activity android:name=".activity.GameFailureActivity" />
+        <activity android:name=".activity.SuspendActivity" />
     </application>
 
 </manifest>

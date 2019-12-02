@@ -1,6 +1,10 @@
 package com.mbp.sudoku.view;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,7 +13,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.mbp.sudoku.activity.GameFailureActivity;
+import com.mbp.sudoku.activity.GameSuccessActivity;
+import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.MapUtil;
+import com.mbp.sudoku.util.TimeUtil;
+
+import java.util.Arrays;
 
 
 /**
@@ -47,7 +57,7 @@ public class GameView extends View {
     /** 错误数量统计 **/
     private Paint errorNumberCountPaint;
     /** 错误数量 **/
-    private int errorCount = 0;
+    private static int errorCount = 0;
 
     private int layout_y = 120;
 
@@ -244,14 +254,14 @@ public class GameView extends View {
         }
 
         //当前点击的横坐标
-        int choX = (int) ((event.getX() - 20) / cellWidth);
+        int choX = (int) ((event.getX() - 20) / cellWidth) > 8 ? 8 : (int) ((event.getX() - 20) / cellWidth);
         //当前点击的纵坐标
-        int choY = (int) ((event.getY() - layout_y) / cellWidth);
+        int choY = (int) ((event.getY() - layout_y) / cellWidth) > 8 ? 8 : (int) ((event.getY() - layout_y) / cellWidth);
 
         Log.i("坐标值：", "("+ choX +","+ choY +")");
 
         // 棋盘的点击
-        if (event.getY() < phoneWidth -20) {
+        if (event.getY() < phoneWidth + cellWidth) {
             if (gameMap.getOnClicked(choX, choY)) {
                 mOptBoard = choX * 9 + choY;
             }
@@ -261,19 +271,51 @@ public class GameView extends View {
             int x = mOptBoard / 9;
             int y = mOptBoard % 9;
             gameMap.setCutData(x, y, choX + 1);
-            if (gameMap.judgeNumber(x, y, choX + 1)){
-                Log.i("","填入数字正确");
-            }
-            else {
+            //判断填入数字是否正确
+            if (!gameMap.judgeNumber(x, y, choX + 1)){
                 errorCount ++;
-                Log.i("","填入数字错误");
+                //闯关失败
+                if (errorCount > 2){
+                    Intent intent = new Intent(getContext(), GameFailureActivity.class);
+                    intent.putExtra("level",MapUtil.getLevelNumber());
+                    getContext().startActivity(intent);
+                }
             }
 
-            if (gameMap.isSuccess()){
-                Log.i("","全部完成");
-            }
-            else {
-                Log.i("","未完成");
+            if (gameMap.isSuccess() && errorCount < 3){
+                Log.i("","闯关成功");
+                //更新最佳时间
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext(),"ShuDu.db",null,1);
+                SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+                String sql = "select good_time from tb_game_map where level = ?";
+                Cursor cursor = database.rawQuery(sql,new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                //移动游标到第一行
+                if (cursor.moveToFirst()){
+                    int goodTime = cursor.getInt(0);
+                    //如果不存在通关时间或者,或者打破记录
+                    if (goodTime == 0 || MapUtil.getCnt() < goodTime){
+                        ContentValues values = new ContentValues();
+                        values.put("good_time",goodTime);
+                        database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                    }
+                }
+                cursor.close();
+
+                //更新关卡状态
+                ContentValues values = new ContentValues();
+                values.put("status",1);
+                database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevelNumber())});
+
+                //删除当前关卡记录
+                database.delete("tb_game_speed","level = ?",new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                Cursor cursor1 = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                Log.d("游戏进度speed",String.valueOf(cursor1.getCount()));
+                cursor1.close();
+                //跳转到游戏成功界面
+                Intent intent = new Intent(getContext(), GameSuccessActivity.class);
+                intent.putExtra("level",MapUtil.getLevelNumber());
+                intent.putExtra("time",MapUtil.getCnt());
+                getContext().startActivity(intent);
             }
         }
         //重新绘制地图
@@ -289,5 +331,13 @@ public class GameView extends View {
     public void repeat() {
         gameMap.initCutData();
         invalidate();
+    }
+
+    public static int getErrorCount() {
+        return errorCount;
+    }
+
+    public static void setErrorCount(int errorCount) {
+        GameView.errorCount = errorCount;
     }
 }

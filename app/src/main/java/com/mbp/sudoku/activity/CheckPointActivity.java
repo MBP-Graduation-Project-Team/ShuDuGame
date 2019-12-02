@@ -15,6 +15,7 @@ import com.mbp.sudoku.R;
 import com.mbp.sudoku.entity.GameMapEntity;
 import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.PointNumber;
+import com.mbp.sudoku.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,29 +33,30 @@ public class CheckPointActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
+        Cursor cursor = database.query("tb_game_map",null,null,null,null,null,null);
         List<GameMapEntity> gameMapEntities = new ArrayList<>();
+        TimeUtil timeUtil = new TimeUtil();
         if (cursor.moveToFirst()){
             cursor.getCount();
             do {
                 GameMapEntity gameMapEntity = new GameMapEntity();
                 int id = cursor.getInt(0);
                 gameMapEntity.setId(id);
-                String goodTime = cursor.getString(3).isEmpty()? "00:00" : cursor.getString(3);
-                gameMapEntity.setGoodTime(goodTime);
+                int goodTime = cursor.getInt(3);
+                gameMapEntity.setGoodTime(timeUtil.getStringTime(goodTime));
                 Log.i("id", String.valueOf(id));
-                Log.i("goodTime", goodTime);
+                Log.i("goodTime", timeUtil.getStringTime(goodTime));
                 gameMapEntities.add(gameMapEntity);
             }while (cursor.moveToNext());
         }
         cursor.close();
         PointNumber.setMapList(gameMapEntities);
         PointNumber.setCountNumber(String.valueOf(cursor.getCount()));
-        Cursor cursor2 = database.rawQuery("select * from gamemap where status = ?",new String[]{"1"});
+        Cursor cursor2 = database.rawQuery("select level from tb_game_map where status = ?",new String[]{"1"});
         Log.d("count",String.valueOf(cursor2.getCount()));
+        PointNumber.setPassNumber(String.valueOf(cursor2.getCount()));
         cursor2.close();
-        PointNumber.setPassNumber("0");
     }
 }

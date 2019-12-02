@@ -31,9 +31,9 @@ public class AdminGenerateActivity extends AppCompatActivity {
             }
             else {
                 //创建数据库
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
                 SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-                //插入数据
+                //生成游戏地图
                 for (int i = 0; i < levelNumber; i++) {
                     GenerateUtil generateUtil = new GenerateUtil();
                     Gson gson = new Gson();
@@ -42,26 +42,27 @@ public class AdminGenerateActivity extends AppCompatActivity {
                     int[][]b = generateUtil.maskCells(a);
                     String gameMap = gson.toJson(b);
                     ContentValues values = new ContentValues();
-                    values.put("gameMap", firstMap);
-                    values.put("mapStatus", gameMap);
-                    values.put("goodTime", "");
-                    values.put("status", 0);
-                    database.insert("gamemap", null, values);
+                    values.put("original_map", firstMap);
+                    values.put("game_map", gameMap);
+                    database.insert("tb_game_map", null, values);
                 }
 
-                Cursor cursor = database.query("gamemap",null,null,null,null,null,null);
+                //初始化游戏最后一次保存进度
+                ContentValues values = new ContentValues();
+                values.put("level", 0);
+                database.insert("tb_end_speed", null, values);
 
+                Cursor cursor = database.query("tb_game_map",null,null,null,null,null,null);
                 if (cursor.moveToFirst()){
                     do {
                         int id = cursor.getInt(0);
                         String map = cursor.getString(1);
-                        Log.i("id", String.valueOf(id));
+                        Log.i("level", String.valueOf(id));
                         Log.i("map", map);
                     }while (cursor.moveToNext());
                 }
                 cursor.close();
             }
         });
-
     }
 }

@@ -46,7 +46,7 @@ public class AdminOperateActivity extends AppCompatActivity {
             }
             else {
                 //创建数据库
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"test.db",null,1);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
                 SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
                 //插入数据
                 for (int i = 0; i < levelNumber; i++) {
@@ -74,7 +74,7 @@ public class AdminOperateActivity extends AppCompatActivity {
                 Toast.makeText(this,"请输入删除关卡的数量!",Toast.LENGTH_SHORT).show();
             }
             else {
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"test.db",null,1);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
                 SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
                 for (int i = startNumber; i <= endNumber ; i++) {
                     database.delete("gamemap","id = ?",new String[]{String.valueOf(i)});

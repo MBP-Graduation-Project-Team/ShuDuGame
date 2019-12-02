@@ -8,18 +8,24 @@ public class MapUtil {
     /** 原始地图 **/
     private static int[][] firstMap;
     /** 游戏地图 **/
-    private static int[][]gameMap;
+    private static int[][] gameMap;
     /** 当前地图 **/
-    private static int[][]mCutData;
+    private static int[][] mCutData;
+    /** 当前关卡编号 **/
+    private static int levelNumber;
+    /** 耗时 **/
+    private static int cnt = 0;
+
 
     /**
      * 构造方法
      * @param gameMap 游戏地图
      * @param firstMap 原始地图
      */
-    public MapUtil(int[][] gameMap,int[][] firstMap) {
+    public MapUtil(int[][] gameMap,int[][] firstMap,int id) {
         MapUtil.firstMap = firstMap;
         MapUtil.gameMap = gameMap;
+        MapUtil.levelNumber = id;
         initCutData();
     }
 
@@ -83,9 +89,9 @@ public class MapUtil {
         for (int i = 0; i < gameMap.length; i++) {
             System.arraycopy(gameMap[i], 0, mCutData[i], 0, gameMap[i].length);
         }
-        for (int[] mCutDatum : mCutData) {
+        /*for (int[] mCutDatum : mCutData) {
             System.out.println(Arrays.toString(mCutDatum));
-        }
+        }*/
     }
 
     /**
@@ -158,4 +164,27 @@ public class MapUtil {
         return  array;
     }
 
+    public static int getLevelNumber() {
+        return levelNumber;
+    }
+
+    public static void setLevelNumber(int levelNumber) {
+        MapUtil.levelNumber = levelNumber;
+    }
+
+    public static int[][] getmCutData() {
+        return mCutData;
+    }
+
+    public static void setmCutData(int[][] mCutData) {
+        MapUtil.mCutData = mCutData;
+    }
+
+    public static int getCnt() {
+        return cnt;
+    }
+
+    public static void setCnt(int cnt) {
+        MapUtil.cnt = cnt;
+    }
 }

@@ -11,28 +11,28 @@ import androidx.annotation.Nullable;
 /**数据库帮助类**/
 public class DataBaseHelper extends SQLiteOpenHelper {
 
+    /** 上下文 **/
     private Context dbContext;
 
     /** 建表语句 **/
-    private static final String CREATE__GAMEMAP = "Create table gamemap(" +
-            "id integer primary key autoincrement NOT NULL," +
-            "gameMap text NOT NULL," +
-            "mapStatus text NOT NULL DEFAULT 0," +
-            "goodTime text," +
-            "status integer NOT NULL DEFAULT 0" +
+    private static final String CREATE__GAME_MAP = "Create table tb_game_map(" +
+            "level integer primary key autoincrement NOT NULL," +
+            "original_map text NOT NULL," +
+            "game_map text NOT NULL," +
+            "status integer NOT NULL DEFAULT 0," +
+            "good_time integer NOT NULL DEFAULT 0" +
             ")";
 
     /** 建表语句 **/
-    private static final String CREATE__GAMESPEED = "Create table gameSpeed(" +
-            "id integer primary key NOT NULL," +
-            "gameSpeed text," +
-            "nowTime text," +
-            "errors integer NOT NULL DEFAULT 0," +
-            "errorPosition text" +
+    private static final String CREATE__GAME_SPEED = "Create table tb_game_speed(" +
+            "level integer primary key NOT NULL," +
+            "game_speed text," +
+            "now_time integer," +
+            "error_number integer NOT NULL DEFAULT 0" +
             ")";
 
     /** 建表语句 **/
-    private static final String CREATE__GAMEENDSPEED = "Create table GameEndSpeed (" +
+    private static final String CREATE__GAME_END_SPEED = "Create table tb_end_speed (" +
             "level integer NOT NULL DEFAULT 0" +
             ")";
 
@@ -50,15 +50,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE__GAMEMAP);
-        db.execSQL(CREATE__GAMESPEED);
-        db.execSQL(CREATE__GAMEENDSPEED);
-        Toast.makeText(dbContext,"create success", Toast.LENGTH_SHORT).show();
+        db.execSQL(CREATE__GAME_MAP);
+        db.execSQL(CREATE__GAME_SPEED);
+        db.execSQL(CREATE__GAME_END_SPEED);
+        Toast.makeText(dbContext,"创建数据库成功!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
-
+//        onCreate(db);
     }
 }

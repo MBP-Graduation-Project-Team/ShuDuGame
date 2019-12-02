@@ -1,11 +1,7 @@
 package com.mbp.sudoku.util;
 
 
-import com.google.gson.Gson;
-import com.mbp.sudoku.entity.GameMapEntity;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -127,7 +123,6 @@ public class GenerateUtil {
                         int ii = (i / 3) * 3 + j / 3;
                         // 当前小方格纵坐标
                         int jj = (i % 3) * 3 + j % 3;
-                        //System.out.println("num:"+num+"\tii:"+ii+"\tjj:"+jj);
                         // 如果可以放置num则放置
                         if (maps[ii][jj] == -1 && j!=used[i] && isCanPut(ii, jj, num)) {
                             maps[ii][jj] = num;

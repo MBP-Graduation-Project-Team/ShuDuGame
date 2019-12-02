@@ -2,6 +2,7 @@ package com.mbp.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,21 +22,23 @@ import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
+    public final String LOGGER = "MainActivity";
+
+    int level = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         initDatabase();
-        DataBaseHelper    dataBaseHelper = new DataBaseHelper(this,"sudoku.db",null,1);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        int id = 0;
-        Cursor cursor = database.query("GameEndSpeed",null,null,null,null,null,null);
+
+        Cursor cursor = database.query("tb_end_speed",null,null,null,null,null,null);
 
         if (cursor.moveToFirst()){
-            do {
-                id = cursor.getInt(0);
-                Log.i("id", String.valueOf(id));
-            }while (cursor.moveToNext());
+            level = cursor.getInt(0);
+            Log.d(LOGGER,String.valueOf(level));
         }
         cursor.close();
 
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         //开始游戏按钮
         Button btn_start = findViewById(R.id.game_begin);
         //关卡编号
-        if (id == 0){
+        if (level == 0){
             btn_continue.setVisibility(View.INVISIBLE);
         }
 
@@ -58,12 +61,13 @@ public class MainActivity extends AppCompatActivity {
         btn_continue.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
             intent.putExtra("gameType","continue");
+            intent.putExtra("level",level);
             startActivity(intent);
         });
     }
 
     /**
-     *
+     * 初始化数据库
      */
     void initDatabase(){
         // com.test.db 是程序的包名，请根据自己的程序调整
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
         // 数据库名为 test.db
         String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
-        String DB_NAME = "sudoku.db";
+        String DB_NAME = "ShuDu.db";
 
         // 检查 SQLite 数据库文件是否存在
         if ((new File(DB_PATH + DB_NAME)).exists() == false) {
