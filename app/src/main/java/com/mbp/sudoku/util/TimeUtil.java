@@ -9,9 +9,15 @@ public class TimeUtil {
      * @return 时间
      */
     public String getStringTime(int cnt) {
-        int hour = cnt/3600;
+//        int hour = cnt/3600;
         int min = cnt % 3600 / 60;
         int second = cnt % 60;
-        return String.format(Locale.CHINA,"%02d:%02d:%02d",hour,min,second);
+//        return String.format(Locale.CHINA,"%02d:%02d:%02d",hour,min,second);
+        return String.format(Locale.CHINA,"%02d:%02d",min,second);
+    }
+
+    public static void main(String[] args) {
+        TimeUtil timeUtil = new TimeUtil();
+        System.out.println(timeUtil.getStringTime(123));
     }
 }

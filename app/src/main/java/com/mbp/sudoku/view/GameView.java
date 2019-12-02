@@ -281,7 +281,7 @@ public class GameView extends View {
                     getContext().startActivity(intent);
                 }
             }
-
+            //游戏成功
             if (gameMap.isSuccess() && errorCount < 3){
                 Log.i("","闯关成功");
                 //更新最佳时间
@@ -292,10 +292,12 @@ public class GameView extends View {
                 //移动游标到第一行
                 if (cursor.moveToFirst()){
                     int goodTime = cursor.getInt(0);
+                    Log.d("goodTime",String.valueOf(goodTime));
+                    Log.d("cnt",String.valueOf(MapUtil.getCnt()));
                     //如果不存在通关时间或者,或者打破记录
                     if (goodTime == 0 || MapUtil.getCnt() < goodTime){
                         ContentValues values = new ContentValues();
-                        values.put("good_time",goodTime);
+                        values.put("good_time",MapUtil.getCnt());
                         database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevelNumber())});
                     }
                 }
@@ -311,6 +313,7 @@ public class GameView extends View {
                 Cursor cursor1 = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(MapUtil.getLevelNumber())});
                 Log.d("游戏进度speed",String.valueOf(cursor1.getCount()));
                 cursor1.close();
+
                 //跳转到游戏成功界面
                 Intent intent = new Intent(getContext(), GameSuccessActivity.class);
                 intent.putExtra("level",MapUtil.getLevelNumber());

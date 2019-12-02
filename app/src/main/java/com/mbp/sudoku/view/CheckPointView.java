@@ -2,6 +2,8 @@ package com.mbp.sudoku.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,6 +19,7 @@ import androidx.annotation.Nullable;
 
 import com.mbp.sudoku.R;
 import com.mbp.sudoku.activity.GameActivity;
+import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.PointNumber;
 
 /**
@@ -195,7 +198,18 @@ public class CheckPointView extends View {
                             Log.d("CheckPointView num:", String.valueOf(num));
                             Intent intent = new Intent(getContext(), GameActivity.class);
                             intent.putExtra("level",num);
-                            intent.putExtra("gameType","new");
+                            DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext(),"ShuDu.db",null,1);
+                            SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+                            Cursor cursor = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{});
+                            //不存在游戏进度
+                            if (cursor.getCount() == 0){
+                                intent.putExtra("gameType","new");
+                            }
+                            //存在游戏进度
+                            else {
+                                intent.putExtra("gameType","continue");
+                            }
+                            cursor.close();
                             getContext().startActivity(intent);
                         }
                     }

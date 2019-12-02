@@ -76,8 +76,9 @@ public class GameActivity extends AppCompatActivity {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-            TimeUtil timeUtil = new TimeUtil();
-            runOnUiThread(() -> timeShow.setText(timeUtil.getStringTime(cnt++)));
+                MapUtil.setCnt(cnt);
+                TimeUtil timeUtil = new TimeUtil();
+                runOnUiThread(() -> timeShow.setText(timeUtil.getStringTime(cnt++)));
             }
         };
         timer.schedule(timerTask,0,1000);
@@ -169,6 +170,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d("GameActivity","onStop()...start");
+        //获取通关状态
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery("select status from tb_game_map where level = ?",new String[]{String.valueOf(level)});
@@ -178,10 +180,11 @@ public class GameActivity extends AppCompatActivity {
                 int[][] currentMap = MapUtil.getmCutData();
                 String jsonStr = gson.toJson(currentMap);
                 //判断是否存在游戏进度
-                if (cursor.getCount() == 0){
+                Cursor cursor1 = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{});
+                //不存在游戏进度
+                if (cursor1.getCount() == 0){
                     Log.d("","不存在游戏进度");
                     Log.d("level",String.valueOf(level));
-                    //不存在游戏进度
                     ContentValues values = new ContentValues();
                     values.put("level", level);
                     values.put("game_speed", jsonStr);
@@ -201,8 +204,9 @@ public class GameActivity extends AppCompatActivity {
                     values.put("error_number", GameView.getErrorCount());
                     database.update("tb_game_speed", values,"level = ?", new String[]{String.valueOf(level)});
                 }
-                cursor.close();
+                cursor1.close();
             }
         }
+        cursor.close();
     }
 }
