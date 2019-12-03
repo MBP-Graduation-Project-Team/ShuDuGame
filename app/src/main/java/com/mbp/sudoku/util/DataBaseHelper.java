@@ -48,6 +48,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         dbContext = context;
     }
 
+    /**
+     * 创建表结构
+     * @param db 数据库实例
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE__GAME_MAP);
@@ -56,6 +60,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Toast.makeText(dbContext,"创建数据库成功!", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 升级数据库
+     * @param db 数据库
+     * @param oldVersion 旧版本
+     * @param newVersion 新版本
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 //        onCreate(db);

@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mbp.sudoku.R;
 
+/**
+ * 管理员活动类
+ */
 public class AdminActivity extends AppCompatActivity {
 
     @Override

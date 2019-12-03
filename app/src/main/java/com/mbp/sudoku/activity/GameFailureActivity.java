@@ -1,5 +1,6 @@
 package com.mbp.sudoku.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mbp.sudoku.MainActivity;
 import com.mbp.sudoku.R;
 import com.mbp.sudoku.util.DataBaseHelper;
-import com.mbp.sudoku.util.MapUtil;
 
 public class GameFailureActivity extends AppCompatActivity {
     @Override
@@ -50,6 +50,10 @@ public class GameFailureActivity extends AppCompatActivity {
             startActivity(intent2);
         });
 
+        //更新最后一次游戏进度
+        ContentValues values = new ContentValues();
+        values.put("level", 0);
+        database.update("tb_end_speed", values,null, null);
 
 
     }

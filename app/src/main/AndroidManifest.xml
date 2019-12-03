@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mbp.sudoku">
 
-
-
     <uses-permission android:name="android.permission.INTERNET"/>
 
 
@@ -32,6 +30,7 @@
         <activity android:name=".activity.GameSuccessActivity" />
         <activity android:name=".activity.GameFailureActivity" />
         <activity android:name=".activity.SuspendActivity" />
+        <activity android:name=".activity.AdminActivity" />
     </application>
 
 </manifest>
