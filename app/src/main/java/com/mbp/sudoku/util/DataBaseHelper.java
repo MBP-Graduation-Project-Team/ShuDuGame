@@ -19,7 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "level integer primary key autoincrement NOT NULL," +
             "original_map text NOT NULL," +
             "game_map text NOT NULL," +
-            "status integer NOT NULL DEFAULT 0," +
+            "status integer NOT NULL DEFAULT -1," +
             "good_time integer NOT NULL DEFAULT 0" +
             ")";
 

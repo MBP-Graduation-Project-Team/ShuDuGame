@@ -188,7 +188,6 @@ public class CheckPointView extends View {
             case MotionEvent.ACTION_UP:
                 break;
             case MotionEvent.ACTION_DOWN:
-                //canvas.drawRect(j*(width+100),i*(height+100),j*(width+100)+width,i*(height+100)+height,unlockBg);
                 float x=event.getX();
                 float y = event.getY();
                 for(int i=0;i<3;i++) {
@@ -196,21 +195,32 @@ public class CheckPointView extends View {
                         if (x >= j*(width+100) && x <= j*(width+100)+width && y >= i*(height+100) && y <= i*(height+100)+height) {
                             num =3*i+j+1;
                             Log.d("CheckPointView num:", String.valueOf(num));
-                            Intent intent = new Intent(getContext(), GameActivity.class);
-                            intent.putExtra("level",num);
                             DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext(),"ShuDu.db",null,1);
                             SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-                            Cursor cursor = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{});
-                            //不存在游戏进度
-                            if (cursor.getCount() == 0){
-                                intent.putExtra("gameType","new");
+                            //获取通关状态
+                            Cursor cursor1 = database.rawQuery("select status from tb_game_map where level = ?",new String[]{String.valueOf(num)});
+                            int status = 1;
+                            if (cursor1.moveToFirst()){
+                                status = cursor1.getInt(0);
                             }
-                            //存在游戏进度
-                            else {
-                                intent.putExtra("gameType","continue");
+                            //非锁定关卡
+                            if (status != 1){
+                                Intent intent = new Intent(getContext(), GameActivity.class);
+                                intent.putExtra("level",num);
+                                Cursor cursor = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{String.valueOf(num)});
+                                //不存在游戏进度
+                                if (cursor.getCount() == 0){
+                                    Log.d("CheckPointView","不存在游戏进度,开始新游戏");
+                                    intent.putExtra("gameType","new");
+                                }
+                                //存在游戏进度
+                                else {
+                                    Log.d("CheckPointView","存在游戏进度,继续游戏");
+                                    intent.putExtra("gameType","continue");
+                                }
+                                cursor.close();
+                                getContext().startActivity(intent);
                             }
-                            cursor.close();
-                            getContext().startActivity(intent);
                         }
                     }
                 }

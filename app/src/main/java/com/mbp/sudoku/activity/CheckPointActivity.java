@@ -46,7 +46,7 @@ public class CheckPointActivity extends AppCompatActivity {
                 GameMapEntity gameMapEntity = new GameMapEntity();
                 int id = cursor.getInt(0);
                 gameMapEntity.setId(id);
-                int goodTime = cursor.getInt(3);
+                int goodTime = cursor.getInt(4);
                 gameMapEntity.setGoodTime(timeUtil.getStringTime(goodTime));
                 Log.i("id", String.valueOf(id));
                 Log.i("goodTime", timeUtil.getStringTime(goodTime));

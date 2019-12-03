@@ -15,6 +15,7 @@ import com.mbp.sudoku.R;
 import com.mbp.sudoku.adapter.MapAdapter;
 import com.mbp.sudoku.entity.GameMapEntity;
 import com.mbp.sudoku.util.DataBaseHelper;
+import com.mbp.sudoku.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,22 +26,23 @@ public class AdminSelectActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_layout);
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this, "test.db", null, 1);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(this, "ShuDu.db", null, 1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Cursor cursor = database.query("gamemap", null, null, null, null, null, null);
+        Cursor cursor = database.query("tb_game_map", null, null, null, null, null, null);
         List<GameMapEntity> gameMapEntities = new ArrayList<>();
+        TimeUtil timeUtil = new TimeUtil();
         if (cursor.moveToFirst()) {
             do {
                 GameMapEntity gameMapEntity = new GameMapEntity();
                 int id = cursor.getInt(0);
                 String map = cursor.getString(1);
                 String gameMap = cursor.getString(2);
-                String time = cursor.getString(3);
-                int status = cursor.getInt(4);
+                int status = cursor.getInt(3);
+                int time = cursor.getInt(4);
                 gameMapEntity.setId(id);
                 gameMapEntity.setGameMap(map);
                 gameMapEntity.setMapStatus(gameMap);
-                gameMapEntity.setGoodTime(time);
+                gameMapEntity.setGoodTime(timeUtil.getStringTime(time));
                 gameMapEntity.setStatus(status);
                 /*Log.i("id", String.valueOf(id));
                 Log.i("map", map);

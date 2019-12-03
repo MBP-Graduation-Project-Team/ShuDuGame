@@ -18,13 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.mbp.sudoku.R;
-import com.mbp.sudoku.adapter.MapAdapter;
-import com.mbp.sudoku.entity.GameMapEntity;
 import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.GenerateUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class AdminOperateActivity extends AppCompatActivity {
 
@@ -57,11 +53,11 @@ public class AdminOperateActivity extends AppCompatActivity {
                     int[][]b = generateUtil.maskCells(a);
                     String gameMap = gson.toJson(b);
                     ContentValues values = new ContentValues();
-                    values.put("gameMap", firstMap);
-                    values.put("mapStatus", gameMap);
-                    values.put("goodTime", "");
+                    values.put("original_map", firstMap);
+                    values.put("game_map", gameMap);
                     values.put("status", 0);
-                    database.insert("gamemap", null, values);
+                    values.put("good_time", "");
+                    database.insert("tb_game_map", null, values);
                 }
                 Toast.makeText(this,"成功生成" + levelNumber + "张地图",Toast.LENGTH_SHORT).show();
             }
@@ -77,11 +73,10 @@ public class AdminOperateActivity extends AppCompatActivity {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
                 SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
                 for (int i = startNumber; i <= endNumber ; i++) {
-                    database.delete("gamemap","id = ?",new String[]{String.valueOf(i)});
+                    database.delete("tb_game_map","level = ?",new String[]{String.valueOf(i)});
                 }
                 Toast.makeText(this,"删除成功",Toast.LENGTH_SHORT).show();
             }
-            Log.d("AdminOperateActivity","删除数据库");
         });
     }
 }

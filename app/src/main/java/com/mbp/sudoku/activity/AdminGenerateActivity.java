@@ -44,13 +44,20 @@ public class AdminGenerateActivity extends AppCompatActivity {
                     ContentValues values = new ContentValues();
                     values.put("original_map", firstMap);
                     values.put("game_map", gameMap);
+                    if (i == 0){
+                        values.put("status",0);
+                    }
                     database.insert("tb_game_map", null, values);
                 }
+
+
 
                 //初始化游戏最后一次保存进度
                 ContentValues values = new ContentValues();
                 values.put("level", 0);
                 database.insert("tb_end_speed", null, values);
+
+                Toast.makeText(AdminGenerateActivity.this,"生成地图成功!",Toast.LENGTH_SHORT).show();
 
                 Cursor cursor = database.query("tb_game_map",null,null,null,null,null,null);
                 if (cursor.moveToFirst()){

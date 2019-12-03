@@ -89,13 +89,10 @@ public class MapUtil {
         for (int i = 0; i < gameMap.length; i++) {
             System.arraycopy(gameMap[i], 0, mCutData[i], 0, gameMap[i].length);
         }
-        /*for (int[] mCutDatum : mCutData) {
-            System.out.println(Arrays.toString(mCutDatum));
-        }*/
     }
 
     /**
-     * 填入当前地图数字
+     * 填入数字
      * @param x 横坐标
      * @param y 纵坐标
      * @param data 数字

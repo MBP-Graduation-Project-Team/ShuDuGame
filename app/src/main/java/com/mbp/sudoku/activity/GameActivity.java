@@ -20,6 +20,7 @@ import com.mbp.sudoku.util.MapUtil;
 import com.mbp.sudoku.util.TimeUtil;
 import com.mbp.sudoku.view.GameView;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,12 +44,12 @@ public class GameActivity extends AppCompatActivity {
         String gameType = gameIntent.getStringExtra("gameType");
         level = gameIntent.getIntExtra("level",1);
         updateEndLevelSpeed(level);
+        getGameMap(level);
         //继续游戏
         if ("continue".equals(gameType)){
             Log.d("GameActivity","继续游戏!");
             DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
             SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-            getGameMap(level);
             Cursor cursor = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(level)});
             if (cursor.moveToFirst()){
                 do {
@@ -57,17 +58,19 @@ public class GameActivity extends AppCompatActivity {
                     int errorCount = cursor.getInt(3);
                     MapUtil.setmCutData(StringToArray(currentMap));
                     GameView.setErrorCount(errorCount);
-                    Log.i("gameMap", currentMap);
+                    Log.d("当前游戏地图", Arrays.deepToString(StringToArray(currentMap)));
                 }while (cursor.moveToNext());
             }
             cursor.close();
         }
         //新游戏
         if ("new".equals(gameType)){
+            Log.d("GameActivity","新游戏!");
             //重置错误数量
             GameView.setErrorCount(0);
+            //重置计时器时间
             MapUtil.setCnt(0);
-            getGameMap(level);
+            cnt = 0;
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
@@ -83,6 +86,7 @@ public class GameActivity extends AppCompatActivity {
         };
         timer.schedule(timerTask,0,1000);
 
+        //暂停按钮
         Button btn_suspend = findViewById(R.id.return_button);
         btn_suspend.setOnClickListener(view -> {
             Intent intent = new Intent(GameActivity.this,SuspendActivity.class);
@@ -127,6 +131,7 @@ public class GameActivity extends AppCompatActivity {
      * @param level 关卡编号
      */
     public void getGameMap(int level){
+        Log.d("GameActivity","获取游戏地图");
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery("select * from tb_game_map where level = ?",new String[]{String.valueOf(level)});
@@ -155,6 +160,7 @@ public class GameActivity extends AppCompatActivity {
      * @param level 关卡编号
      */
     private void updateEndLevelSpeed(int level){
+        Log.d("GameActivity","标记最后一次游戏进度");
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         //更新数据
@@ -163,50 +169,37 @@ public class GameActivity extends AppCompatActivity {
         database.update("tb_end_speed", values,null, null);
     }
 
-    /**
-     * 保存游戏进度
-     */
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("GameActivity","onStop()...start");
+    protected void onPause() {
+        super.onPause();
+        Log.d("GameView", "保存游戏进度");
         //获取通关状态
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(GameActivity.this, "ShuDu.db", null, 1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Cursor cursor = database.rawQuery("select status from tb_game_map where level = ?",new String[]{String.valueOf(level)});
-        if (cursor.moveToFirst()){
-            if (cursor.getInt(0) == 0){
-                Gson gson = new Gson();
-                int[][] currentMap = MapUtil.getmCutData();
-                String jsonStr = gson.toJson(currentMap);
-                //判断是否存在游戏进度
-                Cursor cursor1 = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{});
-                //不存在游戏进度
-                if (cursor1.getCount() == 0){
-                    Log.d("","不存在游戏进度");
-                    Log.d("level",String.valueOf(level));
-                    ContentValues values = new ContentValues();
-                    values.put("level", level);
-                    values.put("game_speed", jsonStr);
-                    values.put("now_time", cnt);
-                    Log.d("GameActivity",timeShow.getText().toString());
-                    values.put("error_number", GameView.getErrorCount());
-                    database.insert("tb_game_speed", null, values);
-                }
-                //存在游戏进度
-                else {
-                    Log.d("","存在游戏进度");
-                    Log.d("level",String.valueOf(level));
-                    //更新数据
-                    ContentValues values = new ContentValues();
-                    values.put("game_speed", jsonStr);
-                    values.put("now_time", cnt);
-                    values.put("error_number", GameView.getErrorCount());
-                    database.update("tb_game_speed", values,"level = ?", new String[]{String.valueOf(level)});
-                }
-                cursor1.close();
-            }
+        Gson gson = new Gson();
+        String mapJson = gson.toJson(MapUtil.getmCutData());
+        //判断是否存在游戏进度
+        Cursor cursor1 = database.rawQuery("select game_speed from tb_game_speed where level = ?", new String[]{String.valueOf(level)});
+        //不存在游戏进度
+        if (cursor1.getCount() == 0) {
+            Log.d("", "不存在游戏进度");
+            ContentValues values = new ContentValues();
+            values.put("level", level);
+            values.put("game_speed", mapJson);
+            values.put("now_time", cnt);
+            values.put("error_number", GameView.getErrorCount());
+            database.insert("tb_game_speed", null, values);
         }
-        cursor.close();
+        //存在游戏进度
+        else {
+            Log.d("", "存在游戏进度");
+            //更新数据
+            ContentValues values = new ContentValues();
+            values.put("game_speed", mapJson);
+            values.put("now_time", cnt);
+            values.put("error_number", GameView.getErrorCount());
+            database.update("tb_game_speed", values, "level = ?", new String[]{String.valueOf(level)});
+        }
+        cursor1.close();
     }
 }
