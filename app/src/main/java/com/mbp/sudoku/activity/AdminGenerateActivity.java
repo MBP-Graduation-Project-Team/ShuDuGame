@@ -62,10 +62,16 @@ public class AdminGenerateActivity extends AppCompatActivity {
                 Cursor cursor = database.query("tb_game_map",null,null,null,null,null,null);
                 if (cursor.moveToFirst()){
                     do {
-                        int id = cursor.getInt(0);
-                        String map = cursor.getString(1);
-                        Log.i("level", String.valueOf(id));
-                        Log.i("map", map);
+                        int level = cursor.getInt(0);
+                        String map1 = cursor.getString(1);
+                        String map2 = cursor.getString(2);
+                        int status = cursor.getInt(3);
+                        int time = cursor.getInt(4);
+                        Log.i("level", String.valueOf(level));
+                        Log.i("map", map1);
+                        Log.i("map", map2);
+                        Log.i("map", String.valueOf(status));
+                        Log.i("map", String.valueOf(time));
                     }while (cursor.moveToNext());
                 }
                 cursor.close();

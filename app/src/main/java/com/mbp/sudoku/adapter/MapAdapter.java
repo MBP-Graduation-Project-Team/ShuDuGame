@@ -32,9 +32,8 @@ public class MapAdapter extends ArrayAdapter<GameMapEntity> {
         TextView tv_status = view.findViewById(R.id.map_status);
         String level = "第" + gameMapEntity.getId().toString() + "关";
         tv_id.setText(level);
-        Log.i("time","*" + gameMapEntity.getGoodTime());
-        tv_time.setText(!gameMapEntity.getGoodTime().isEmpty() ? gameMapEntity.getGoodTime() : "--:--");
-        tv_status.setText(gameMapEntity.getStatus() == 0 ? "未过关" : "已通关");
+        tv_time.setText(gameMapEntity.getGoodTime());
+        tv_status.setText(gameMapEntity.getStatus() == -1 ? "锁定" : "正常");
         return view;
     }
 }

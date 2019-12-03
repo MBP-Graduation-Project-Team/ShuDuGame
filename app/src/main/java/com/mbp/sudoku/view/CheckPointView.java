@@ -203,8 +203,9 @@ public class CheckPointView extends View {
                             if (cursor1.moveToFirst()){
                                 status = cursor1.getInt(0);
                             }
+                            cursor1.close();
                             //非锁定关卡
-                            if (status != 1){
+                            if (status != -1){
                                 Intent intent = new Intent(getContext(), GameActivity.class);
                                 intent.putExtra("level",num);
                                 Cursor cursor = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{String.valueOf(num)});

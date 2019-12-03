@@ -55,9 +55,7 @@ public class AdminOperateActivity extends AppCompatActivity {
                     ContentValues values = new ContentValues();
                     values.put("original_map", firstMap);
                     values.put("game_map", gameMap);
-                    values.put("status", 0);
-                    values.put("good_time", "");
-                    database.insert("tb_game_map", null, values);
+                    database.insert("tb_game_map",   null, values);
                 }
                 Toast.makeText(this,"成功生成" + levelNumber + "张地图",Toast.LENGTH_SHORT).show();
             }

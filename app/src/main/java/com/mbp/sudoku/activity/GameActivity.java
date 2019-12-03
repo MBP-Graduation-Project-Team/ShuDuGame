@@ -143,8 +143,8 @@ public class GameActivity extends AppCompatActivity {
                 String mapStatus = cursor.getString(2);
                 int[][]gameMapArray = StringToArray(mapStatus);
                 MapUtil mapUtil = new MapUtil(gameMapArray,firstMap,id);
-                String goodTime = cursor.getString(3);
-                int status = cursor.getInt(4);
+                int status = cursor.getInt(3);
+                String goodTime = cursor.getString(4);
                 Log.i("id", String.valueOf(id));
                 Log.i("gameMap", gameMap);
                 Log.i("mapStatus", mapStatus);
