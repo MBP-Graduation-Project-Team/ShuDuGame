@@ -12,7 +12,7 @@ public class MapUtil {
     /** 当前关卡编号 **/
     private static int level;
     /** 耗时 **/
-    private static int time = 0;
+    private static int time;
 
     /**
      * 构造方法
@@ -137,26 +137,6 @@ public class MapUtil {
         return  result;
     }
 
-    /**
-     * JSON转int二维数组
-     * @param inputString json字符串
-     * @return 二维数组
-     */
-    private static int[][] StringToArray(String inputString){
-        int[][] array = new int[9][9];
-        String newString = inputString;
-        newString = newString.replaceAll("\\[","");
-        newString = newString.replaceAll("]","");
-        newString = newString.replaceAll(",","");
-        int n = 0;
-        for (int i = 0;i < 9;i++){
-            for (int j = 0; j < 9; j++) {
-                array[i][j] = newString.charAt(n) - 48;
-                n++;
-            }
-        }
-        return  array;
-    }
 
     public static int getLevel() {
         return level;

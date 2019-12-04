@@ -32,8 +32,10 @@ public class GameView extends View {
     private int cellWidth;
     /** 白线 **/
     private Paint mLinePaint;
+    /** 白线 **/
+    private Paint linePaint;
     /** 浅蓝色的方格子 **/
-    private Paint mDarkPaint;
+//    private Paint mDarkPaint;
     /** 用户点击 浅绿色的格子 **/
     private Paint mOptDarkPaint;
     /** 原始数据 数字 **/
@@ -93,23 +95,28 @@ public class GameView extends View {
     //设定画笔颜色,风格,大小
     private void initPaint() {
         mLinePaint = new Paint();
-        mLinePaint.setColor(Color.WHITE);
+        mLinePaint.setColor(Color.rgb(198,131,46));
         mLinePaint.setStyle(Paint.Style.STROKE);
         mLinePaint.setStrokeWidth(2f);
 
-        mDarkPaint = new Paint();
+        linePaint = new Paint();
+        linePaint.setColor(Color.rgb(232,215,169));
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStrokeWidth(2f);
+
+        /*mDarkPaint = new Paint();
         mDarkPaint.setColor(Color.parseColor("#52E7CD"));
-        mDarkPaint.setStyle(Paint.Style.FILL);
+        mDarkPaint.setStyle(Paint.Style.FILL);*/
 
         numberPaint = new Paint();
-        numberPaint.setColor(Color.WHITE);
+        numberPaint.setColor(Color.rgb(149,90,46));
         numberPaint.setTextSize(cellWidth * 0.65f);
         numberPaint.setTextAlign(Paint.Align.CENTER);
-        numberPaint.setShadowLayer(10F, -5F, 8F, Color.parseColor("#999999"));
+//        numberPaint.setShadowLayer(10F, -5F, 8F, Color.parseColor("#999999"));
         numberPaint.setAntiAlias(true);
 
         mOptPaint = new Paint();
-        mOptPaint.setColor(Color.WHITE);
+        mOptPaint.setColor(Color.rgb(149,90,46));
         mOptPaint.setTextSize(cellWidth * 0.65f+15);
         mOptPaint.setTextAlign(Paint.Align.CENTER);
         mOptPaint.setShadowLayer(10F, -5F, 8F, Color.parseColor("#999999"));
@@ -130,7 +137,8 @@ public class GameView extends View {
         errorNumberPaint.setAntiAlias(true);
 
         mOptDarkPaint = new Paint();
-        mOptDarkPaint.setColor(Color.parseColor("#52E76E"));
+//        mOptDarkPaint.setColor(Color.parseColor("#52E76E"));
+        mOptDarkPaint.setColor(Color.rgb(240,189,107));
         mOptDarkPaint.setStyle(Paint.Style.FILL);
 
         errorNumberCountPaint = new Paint();
@@ -187,10 +195,10 @@ public class GameView extends View {
 
         // 画平行四边形
         float startY = phoneWidth + layout_y;
-        canvas.drawLine(50, startY, phoneWidth -50, startY, mLinePaint);
+        /*canvas.drawLine(50, startY, phoneWidth -50, startY, mLinePaint);
         canvas.drawLine(10, startY + cellWidth - 40, phoneWidth -10, startY + cellWidth -40, mLinePaint);
         canvas.drawLine(50, startY, 10, startY + cellWidth - 40, mLinePaint);
-        canvas.drawLine(phoneWidth -50, startY, phoneWidth -10, startY + cellWidth -40, mLinePaint);
+        canvas.drawLine(phoneWidth -50, startY, phoneWidth -10, startY + cellWidth -40, mLinePaint);*/
 
         //画出候选区文字
         float y = (cellWidth - 30)/2.0f;
@@ -205,7 +213,7 @@ public class GameView extends View {
      */
     private void drawBoard(Canvas canvas) {
         // 画底色
-        for (int i = 0; i < 9; i++) {
+        /*for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 int x = i / 3;
                 int y = j / 3;
@@ -215,14 +223,24 @@ public class GameView extends View {
                     canvas.drawRect(cellWidth * j + 20, layout_y + cellWidth * i, cellWidth * j + 20 + cellWidth, layout_y + cellWidth * i + cellWidth, mDarkPaint);
                 }
             }
+        }*/
+
+        // 画白线
+        for (int i = 0; i < 10; i+=3) {
+                canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,
+                        cellWidth * i + 1 + layout_y, mLinePaint);
+                canvas.drawLine(cellWidth * i + 1 + 20, layout_y, cellWidth * i + 1
+                        + 20, 9 * cellWidth + layout_y, mLinePaint);
         }
 
         // 画白线
         for (int i = 0; i < 10; i++) {
-            canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,
-                    cellWidth * i + 1 + layout_y, mLinePaint);
-            canvas.drawLine(cellWidth * i + 1 + 20, layout_y, cellWidth * i + 1
-                    + 20, 9 * cellWidth + layout_y, mLinePaint);
+            if (!(i == 0 || i == 3 || i == 6 || i == 9)){
+                canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,
+                        cellWidth * i + 1 + layout_y, linePaint);
+                canvas.drawLine(cellWidth * i + 1 + 20, layout_y, cellWidth * i + 1
+                        + 20, 9 * cellWidth + layout_y, linePaint);
+            }
         }
 
         //画初始数字
@@ -270,7 +288,6 @@ public class GameView extends View {
             int y = mOptBoard % 9;
             gameMap.setCutData(x, y, choX + 1);
 
-//            saveSpeed(MapUtil.getLevel(),MapUtil.getTime());
 
             //填入数字错误
             if (!gameMap.judgeNumber(x, y, choX + 1)){
@@ -311,14 +328,6 @@ public class GameView extends View {
                 values.put("status",1);
                 database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevel())});
 
-                /*//删除当前关卡记录
-                Log.d("GameView","删除当前关卡记录");
-                database.delete("tb_game_speed","level = ?",new String[]{String.valueOf(MapUtil.getLevel())});
-
-                Cursor cursor1 = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(MapUtil.getLevel())});
-                Log.d("游戏进度speed",String.valueOf(cursor1.getCount()));
-                cursor1.close();*/
-
                 //跳转到游戏成功界面
                 Intent intent = new Intent(getContext(), GameSuccessActivity.class);
                 intent.putExtra("level",MapUtil.getLevel());
@@ -329,16 +338,6 @@ public class GameView extends View {
         //重新绘制地图
         invalidate();
         return true;
-    }
-
-    // 再来一局
-    public void play() {
-        initView();
-    }
-    // 重头开始
-    public void repeat() {
-        gameMap.initCutData();
-        invalidate();
     }
 
     public static int getErrorCount() {

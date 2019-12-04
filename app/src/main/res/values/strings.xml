@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">标准数独</string>
-    <string name="gameStart">开始游戏</string>
+    <string name="gameStart">标准数独(九宫)</string>
     <string name="continueGame">继续游戏</string>
     <string name="selectCheckpoint">选择关卡</string>
     <string name="quitGame">退出游戏</string>
