@@ -33,6 +33,7 @@ public class PointView extends View {
         super(context, attrs, defStyleAttr);
         isView();
     }
+
     public void isView(){
         levelNumber =new Paint();
         levelNumber.setColor(Color.argb(255,255,255,255));

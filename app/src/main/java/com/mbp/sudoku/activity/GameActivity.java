@@ -15,28 +15,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.mbp.sudoku.R;
 import com.mbp.sudoku.util.DataBaseHelper;
-import com.mbp.sudoku.util.GenerateUtil;
 import com.mbp.sudoku.util.MapUtil;
 import com.mbp.sudoku.util.TimeUtil;
 import com.mbp.sudoku.view.GameView;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
-    /** **/
+    /** TimerTask **/
     private TimerTask timerTask;
-    /** **/
+    /** 时间 **/
     private Timer timer = new Timer();
     /** 计时器显示 **/
     private TextView timeShow;
     /** 关卡编号 **/
     private int level;
     /** 耗时 **/
-    private int cnt = MapUtil.getCnt();
+    private int cnt = MapUtil.getTime();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
                     String currentMap = cursor.getString(1);
                     cnt = cursor.getInt(2);
                     int errorCount = cursor.getInt(3);
-                    MapUtil.setmCutData(StringToArray(currentMap));
+                    MapUtil.setCutData(StringToArray(currentMap));
                     GameView.setErrorCount(errorCount);
                     Log.d("当前游戏地图", Arrays.deepToString(StringToArray(currentMap)));
                 }while (cursor.moveToNext());
@@ -69,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
             //重置错误数量
             GameView.setErrorCount(0);
             //重置计时器时间
-            MapUtil.setCnt(0);
+            MapUtil.setTime(0);
             cnt = 0;
         }
         super.onCreate(savedInstanceState);
@@ -79,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                MapUtil.setCnt(cnt);
+                MapUtil.setTime(cnt);
                 TimeUtil timeUtil = new TimeUtil();
                 runOnUiThread(() -> timeShow.setText(timeUtil.getStringTime(cnt++)));
             }
@@ -173,12 +171,13 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d("GameView", "保存游戏进度");
-        //获取通关状态
+
+        Gson gson = new Gson();
+        String mapJson = gson.toJson(MapUtil.getCutData());
+
+        //获取游戏进度
         DataBaseHelper dataBaseHelper = new DataBaseHelper(GameActivity.this, "ShuDu.db", null, 1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Gson gson = new Gson();
-        String mapJson = gson.toJson(MapUtil.getmCutData());
-        //判断是否存在游戏进度
         Cursor cursor1 = database.rawQuery("select game_speed from tb_game_speed where level = ?", new String[]{String.valueOf(level)});
         //不存在游戏进度
         if (cursor1.getCount() == 0) {

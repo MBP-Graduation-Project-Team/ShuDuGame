@@ -20,33 +20,37 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * 主页面活动类
+ */
 public class MainActivity extends AppCompatActivity {
 
-    public final String LOGGER = "MainActivity";
-
-    int level = 0;
+    /** 最后一次游戏关卡 **/
+    private int level = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
         initDatabase();
+
+        //获取最后一次游戏关卡
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-
         Cursor cursor = database.query("tb_end_speed",null,null,null,null,null,null);
-
         if (cursor.moveToFirst()){
             level = cursor.getInt(0);
-            Log.d(LOGGER,String.valueOf(level));
+            Log.d("获取最后一次游戏关卡",String.valueOf(level));
         }
         cursor.close();
+        database.close();
 
         //继续游戏按钮
         Button btn_continue = findViewById(R.id.game_continue);
         //开始游戏按钮
         Button btn_start = findViewById(R.id.game_begin);
-        //关卡编号
+        //隐藏继续游戏按钮
         if (level == 0){
             btn_continue.setVisibility(View.INVISIBLE);
         }
@@ -70,15 +74,14 @@ public class MainActivity extends AppCompatActivity {
      * 初始化数据库
      */
     void initDatabase(){
-        // com.test.db 是程序的包名，请根据自己的程序调整
-        // /data/data/com.test.db/
+        // com.mbp.sudoku 是程序的包名，请根据自己的程序调整
         // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
-        // 数据库名为 test.db
-        String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
-        String DB_NAME = "ShuDu.db";
+        // 数据库名为 ShuDu.db
+        final String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
+        final String DB_NAME = "ShuDu.db";
 
         // 检查 SQLite 数据库文件是否存在
-        if ((new File(DB_PATH + DB_NAME)).exists() == false) {
+        if (!(new File(DB_PATH + DB_NAME)).exists()) {
             // 如 SQLite 数据库文件不存在，再检查一下 database 目录是否存在
             File f = new File(DB_PATH);
             // 如 database 目录不存在，新建该目录

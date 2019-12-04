@@ -1,16 +1,11 @@
 package com.mbp.sudoku.util;
 
-
-
 import java.util.Random;
 
 /**
- * @author 邓宁
- * @deprecated  Created in 15:25 2019/11/13
+ * 生成数独题目工具类
  */
-public class GenerateUtil {
-    private static final int SIZE = 9;
-    private static final int LEVEL_MAX = 10;
+public class GenerateMapUtil {
 
     //数独地图数组
     private static int[][] maps = new int[9][9];
@@ -21,10 +16,15 @@ public class GenerateUtil {
     //是否已经完成地图的生成
     private static boolean isOk = true;
 
-
-    public int[][] maskCells(int[][] suduAry) {
+    /**
+     * 挖空数独,生成数独题目
+     * @param array 终盘数独
+     * @return 数独题目
+     */
+    public int[][] maskCells(int[][] array) {
         int level = 1;
         int min, max;
+        int LEVEL_MAX = 10;
         level %= LEVEL_MAX;
         if(level == 0) level = LEVEL_MAX;
 
@@ -46,15 +46,15 @@ public class GenerateUtil {
         int count = random.nextInt(max) + min;
         for(int i=0;i<count;i++) {
             do {
-                int n = random.nextInt(SIZE);
-                int m = random.nextInt(SIZE);
-                if(suduAry[n][m] > 0) {
-                    suduAry[n][m] = 0;
+                int n = random.nextInt(9);
+                int m = random.nextInt(9);
+                if(array[n][m] > 0) {
+                    array[n][m] = 0;
                     break;
                 }
             }while(true);
         }
-        return suduAry;
+        return array;
     }
 
 
@@ -74,7 +74,7 @@ public class GenerateUtil {
     /*
      * 初始化maps
      */
-    private static void initMaps() {
+    private void initMaps() {
         // 初始化地图数组中没有填入任何数字
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -192,5 +192,4 @@ public class GenerateUtil {
         }
         return true;
     }
-
 }

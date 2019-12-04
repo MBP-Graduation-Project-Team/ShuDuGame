@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -13,13 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mbp.sudoku.R;
 import com.mbp.sudoku.adapter.MapAdapter;
-import com.mbp.sudoku.entity.GameMapEntity;
+import com.mbp.sudoku.entity.GameMap;
 import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class AdminSelectActivity extends AppCompatActivity {
 
     @Override
@@ -29,11 +30,11 @@ public class AdminSelectActivity extends AppCompatActivity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this, "ShuDu.db", null, 1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.query("tb_game_map", null, null, null, null, null, null);
-        List<GameMapEntity> gameMapEntities = new ArrayList<>();
+        List<GameMap> gameMapEntities = new ArrayList<>();
         TimeUtil timeUtil = new TimeUtil();
         if (cursor.moveToFirst()) {
             do {
-                GameMapEntity gameMapEntity = new GameMapEntity();
+                GameMap gameMapEntity = new GameMap();
                 int id = cursor.getInt(0);
                 String map = cursor.getString(1);
                 String gameMap = cursor.getString(2);
@@ -61,7 +62,7 @@ public class AdminSelectActivity extends AppCompatActivity {
         listView.setAdapter(mapAdapter);
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            GameMapEntity gameMapEntity = gameMapEntities.get(i);
+            GameMap gameMapEntity = gameMapEntities.get(i);
             Intent intent = new Intent(AdminSelectActivity.this,GameActivity.class);
             intent.putExtra("level",gameMapEntity.getId());
             startActivity(intent);

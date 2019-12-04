@@ -1,7 +1,5 @@
 package com.mbp.sudoku.util;
 
-import java.util.Arrays;
-
 
 public class MapUtil {
 
@@ -10,12 +8,11 @@ public class MapUtil {
     /** 游戏地图 **/
     private static int[][] gameMap;
     /** 当前地图 **/
-    private static int[][] mCutData;
+    private static int[][] cutData;
     /** 当前关卡编号 **/
-    private static int levelNumber;
+    private static int level;
     /** 耗时 **/
-    private static int cnt = 0;
-
+    private static int time = 0;
 
     /**
      * 构造方法
@@ -25,7 +22,7 @@ public class MapUtil {
     public MapUtil(int[][] gameMap,int[][] firstMap,int id) {
         MapUtil.firstMap = firstMap;
         MapUtil.gameMap = gameMap;
-        MapUtil.levelNumber = id;
+        MapUtil.level = id;
         initCutData();
     }
 
@@ -46,48 +43,48 @@ public class MapUtil {
     }
 
     /** 判断该坐标有哪些数不可用 */
-//    public int[] getFalseData(int x, int y){
-//        Set<Integer> set = new TreeSet<>();
-//        // 检查X 轴有哪些不能点
-//        for (int i = 0; i < 9; i++) {
-//            int d = gameMap[y][i];
-//            if (d!=0) {
-//                set.add(d);
-//            }
-//        }
-//        // 检查 y 轴有哪些不能点
-//        for (int i = 0; i < 9; i++) {
-//            int d = gameMap[i][x];
-//            if (d!=0) {
-//                set.add(d);
-//            }
-//        }
-//        // 检查 3*3 方格哪些不能点
-//        x = x/3*3;
-//        y = y/3*3;
-//        for (int i = x; i < x+3; i++) {
-//            for (int j = y; j < y+3; j++) {
-//                int d = gameMap[j][i];
-//                if (d!=0) {
-//                    set.add(d);
-//                }
-//            }
-//        }
-//        Integer[] arr2 = set.toArray(new Integer[0]);
-//        // 数组的包装类型不能转 只能自己转；吧Integer转为为int数组；
-//        int[] result = new int[arr2.length];
-//        for (int i = 0; i < result.length; i++) {
-//            result[i] = arr2[i];
-//        }
-//        System.out.println("false Number ： "+Arrays.toString(result));
-//        return result;
-//    }
+    /*public int[] getFalseData(int x, int y){
+        Set<Integer> set = new TreeSet<>();
+        // 检查X 轴有哪些不能点
+        for (int i = 0; i < 9; i++) {
+            int d = gameMap[y][i];
+            if (d!=0) {
+                set.add(d);
+            }
+        }
+        // 检查 y 轴有哪些不能点
+        for (int i = 0; i < 9; i++) {
+            int d = gameMap[i][x];
+            if (d!=0) {
+                set.add(d);
+            }
+        }
+        // 检查 3*3 方格哪些不能点
+        x = x/3*3;
+        y = y/3*3;
+        for (int i = x; i < x+3; i++) {
+            for (int j = y; j < y+3; j++) {
+                int d = gameMap[j][i];
+                if (d!=0) {
+                    set.add(d);
+                }
+            }
+        }
+        Integer[] arr2 = set.toArray(new Integer[0]);
+        // 数组的包装类型不能转 只能自己转；吧Integer转为为int数组；
+        int[] result = new int[arr2.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = arr2[i];
+        }
+        System.out.println("false Number ： "+ Arrays.toString(result));
+        return result;
+    }*/
 
     /** 当前棋盘数据 */
     public void initCutData(){
-        mCutData = new int[9][9];
+        cutData = new int[9][9];
         for (int i = 0; i < gameMap.length; i++) {
-            System.arraycopy(gameMap[i], 0, mCutData[i], 0, gameMap[i].length);
+            System.arraycopy(gameMap[i], 0, cutData[i], 0, gameMap[i].length);
         }
     }
 
@@ -99,7 +96,7 @@ public class MapUtil {
      */
     public void setCutData(int x, int y, int data){
         if (getOnClicked(x, y)) {
-            mCutData[x][y] = data;
+            cutData[x][y] = data;
         }
     }
 
@@ -110,7 +107,7 @@ public class MapUtil {
      * @return 当前坐标数字
      */
     public int getCutData(int x, int y){
-        return mCutData[x][y];
+        return cutData[x][y];
     }
 
     /**
@@ -132,7 +129,7 @@ public class MapUtil {
         boolean result = true;
         for (int i = 0; i < 9;i++){
             for (int j = 0;j < 9;j++){
-                if (mCutData[i][j] == 0){
+                if (cutData[i][j] == 0){
                     result = false;
                 }
             }
@@ -161,27 +158,27 @@ public class MapUtil {
         return  array;
     }
 
-    public static int getLevelNumber() {
-        return levelNumber;
+    public static int getLevel() {
+        return level;
     }
 
-    public static void setLevelNumber(int levelNumber) {
-        MapUtil.levelNumber = levelNumber;
+    public static void setLevel(int level) {
+        MapUtil.level = level;
     }
 
-    public static int[][] getmCutData() {
-        return mCutData;
+    public static int[][] getCutData() {
+        return cutData;
     }
 
-    public static void setmCutData(int[][] mCutData) {
-        MapUtil.mCutData = mCutData;
+    public static void setCutData(int[][] cutData) {
+        MapUtil.cutData = cutData;
     }
 
-    public static int getCnt() {
-        return cnt;
+    public static int getTime() {
+        return time;
     }
 
-    public static void setCnt(int cnt) {
-        MapUtil.cnt = cnt;
+    public static void setTime(int time) {
+        MapUtil.time = time;
     }
 }

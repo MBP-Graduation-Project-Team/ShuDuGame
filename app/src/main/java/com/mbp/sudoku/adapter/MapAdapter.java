@@ -10,22 +10,22 @@ import android.widget.TextView;
 
 
 import com.mbp.sudoku.R;
-import com.mbp.sudoku.entity.GameMapEntity;
+import com.mbp.sudoku.entity.GameMap;
 
 import java.util.List;
 
-public class MapAdapter extends ArrayAdapter<GameMapEntity> {
+public class MapAdapter extends ArrayAdapter<GameMap> {
 
     private int resourceId;
 
-    public MapAdapter( Context context, int textViewResourceId, List<GameMapEntity> objects) {
+    public MapAdapter( Context context, int textViewResourceId, List<GameMap> objects) {
         super(context, textViewResourceId, objects);
         resourceId = textViewResourceId;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        GameMapEntity gameMapEntity = getItem(position);
+        GameMap gameMapEntity = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView tv_id = view.findViewById(R.id.map_id);
         TextView tv_time = view.findViewById(R.id.map_time);

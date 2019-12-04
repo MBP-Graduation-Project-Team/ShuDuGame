@@ -18,9 +18,6 @@ import com.mbp.sudoku.activity.GameFailureActivity;
 import com.mbp.sudoku.activity.GameSuccessActivity;
 import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.MapUtil;
-import com.mbp.sudoku.util.TimeUtil;
-
-import java.util.Arrays;
 
 
 /**
@@ -273,7 +270,7 @@ public class GameView extends View {
             int y = mOptBoard % 9;
             gameMap.setCutData(x, y, choX + 1);
 
-//            saveSpeed(MapUtil.getLevelNumber(),MapUtil.getCnt());
+//            saveSpeed(MapUtil.getLevel(),MapUtil.getTime());
 
             //填入数字错误
             if (!gameMap.judgeNumber(x, y, choX + 1)){
@@ -283,7 +280,7 @@ public class GameView extends View {
                     Log.d("GameView","闯关失败");
 
                     Intent intent = new Intent(getContext(), GameFailureActivity.class);
-                    intent.putExtra("level",MapUtil.getLevelNumber());
+                    intent.putExtra("level",MapUtil.getLevel());
                     getContext().startActivity(intent);
                 }
             }
@@ -294,16 +291,16 @@ public class GameView extends View {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext(),"ShuDu.db",null,1);
                 SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
                 String sql = "select good_time from tb_game_map where level = ?";
-                Cursor cursor = database.rawQuery(sql,new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                Cursor cursor = database.rawQuery(sql,new String[]{String.valueOf(MapUtil.getLevel())});
                 //移动游标到第一行
                 if (cursor.moveToFirst()){
                     int goodTime = cursor.getInt(0);
                     //如果不存在通关时间或者打破记录
-                    if (goodTime == 0 || MapUtil.getCnt() < goodTime){
+                    if (goodTime == 0 || MapUtil.getTime() < goodTime){
                         Log.d("GameView","更新通关时间");
                         ContentValues values = new ContentValues();
-                        values.put("good_time",MapUtil.getCnt());
-                        database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                        values.put("good_time",MapUtil.getTime());
+                        database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevel())});
                     }
                 }
                 cursor.close();
@@ -312,20 +309,20 @@ public class GameView extends View {
                 Log.d("GameView","更新关卡状态");
                 ContentValues values = new ContentValues();
                 values.put("status",1);
-                database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                database.update("tb_game_map", values,"level = ?", new String[]{String.valueOf(MapUtil.getLevel())});
 
                 /*//删除当前关卡记录
                 Log.d("GameView","删除当前关卡记录");
-                database.delete("tb_game_speed","level = ?",new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                database.delete("tb_game_speed","level = ?",new String[]{String.valueOf(MapUtil.getLevel())});
 
-                Cursor cursor1 = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(MapUtil.getLevelNumber())});
+                Cursor cursor1 = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(MapUtil.getLevel())});
                 Log.d("游戏进度speed",String.valueOf(cursor1.getCount()));
                 cursor1.close();*/
 
                 //跳转到游戏成功界面
                 Intent intent = new Intent(getContext(), GameSuccessActivity.class);
-                intent.putExtra("level",MapUtil.getLevelNumber());
-                intent.putExtra("time",MapUtil.getCnt());
+                intent.putExtra("level",MapUtil.getLevel());
+                intent.putExtra("time",MapUtil.getTime());
                 getContext().startActivity(intent);
             }
         }
@@ -363,7 +360,7 @@ public class GameView extends View {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext(),"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Gson gson = new Gson();
-        String mapJson = gson.toJson(MapUtil.getmCutData());
+        String mapJson = gson.toJson(MapUtil.getCutData());
         //判断是否存在游戏进度
         Cursor cursor1 = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{String.valueOf(level)});
         //不存在游戏进度

@@ -1,14 +1,18 @@
 package com.mbp.sudoku.entity;
 
 /**
- * @author 邓宁
- * @deprecated  Created in 17:25 2019/11/21
+ * 游戏地图类
  */
-public class GameMapEntity {
+public class GameMap {
+    /** 关卡编号 **/
     private Integer id;
+    /** 原始地图 **/
     private String gameMap;
+    /** 游戏地图 **/
     private String mapStatus;
+    /** 最佳通关时间 **/
     private String goodTime;
+    /** 关卡状态 **/
     private Integer status;
 
     public Integer getId() {
@@ -53,7 +57,7 @@ public class GameMapEntity {
 
     @Override
     public String toString() {
-        return "GameMapEntity{" +
+        return "GameMap{" +
                 "id=" + id +
                 ", gameMap='" + gameMap + '\'' +
                 ", mapStatus='" + mapStatus + '\'' +

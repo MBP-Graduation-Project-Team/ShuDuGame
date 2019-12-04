@@ -12,14 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mbp.sudoku.MainActivity;
 import com.mbp.sudoku.R;
-import com.mbp.sudoku.entity.GameMapEntity;
+import com.mbp.sudoku.entity.GameMap;
 import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.PointNumber;
 import com.mbp.sudoku.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-//选择关卡界面活动类
+
+/**
+ * 选择关卡界面活动类
+ */
 public class CheckPointActivity extends AppCompatActivity {
 
     @Override
@@ -38,12 +41,11 @@ public class CheckPointActivity extends AppCompatActivity {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
         SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
         Cursor cursor = database.query("tb_game_map",null,null,null,null,null,null);
-        List<GameMapEntity> gameMapEntities = new ArrayList<>();
+        List<GameMap> gameMapEntities = new ArrayList<>();
         TimeUtil timeUtil = new TimeUtil();
         if (cursor.moveToFirst()){
-            cursor.getCount();
             do {
-                GameMapEntity gameMapEntity = new GameMapEntity();
+                GameMap gameMapEntity = new GameMap();
                 int id = cursor.getInt(0);
                 gameMapEntity.setId(id);
                 int goodTime = cursor.getInt(4);

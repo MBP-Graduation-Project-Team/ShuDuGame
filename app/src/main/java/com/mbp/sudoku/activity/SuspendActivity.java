@@ -47,7 +47,7 @@ public class SuspendActivity extends AppCompatActivity {
             //删除当前关卡记录
             DataBaseHelper dataBaseHelper = new DataBaseHelper(SuspendActivity.this,"ShuDu.db",null,1);
             SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-            database.delete("tb_game_speed","level = ?",new String[]{String.valueOf(MapUtil.getLevelNumber())});
+            database.delete("tb_game_speed","level = ?",new String[]{String.valueOf(MapUtil.getLevel())});
             Cursor cursor1 = database.rawQuery("select * from tb_game_speed where level = ?",new String[]{String.valueOf(level)});
             Log.d("游戏进度speed",String.valueOf(cursor1.getCount()));
             cursor1.close();

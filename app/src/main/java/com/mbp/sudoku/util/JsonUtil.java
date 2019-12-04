@@ -3,7 +3,7 @@ package com.mbp.sudoku.util;
 
 
 import com.google.gson.Gson;
-import com.mbp.sudoku.entity.GameMapEntity;
+import com.mbp.sudoku.entity.GameMap;
 
 import java.io.*;
 import java.util.Arrays;
@@ -79,7 +79,7 @@ public class JsonUtil {
     public static void main(String[] args) throws IOException {
 
 
-        /*GameMapEntity asd = gson.fromJson(jsonStr,GameMapEntity.class);
+        /*GameMap asd = gson.fromJson(jsonStr,GameMap.class);
         int[][]array = asd.getGameMap();
         System.out.println(Arrays.deepToString(array));*/
 
