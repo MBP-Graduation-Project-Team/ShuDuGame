@@ -8,13 +8,13 @@ import java.util.Random;
 public class GenerateMapUtil {
 
     //数独地图数组
-    private static int[][] maps = new int[9][9];
+    private int[][] maps = new int[9][9];
     //每个小九宫格可放置位置的数
-    private static int[] canPutSum = new int[9];
+    private int[] canPutSum = new int[9];
     //用来存储之前放置过的位置
-    private static int[] used = new int[9];
+    private int[] used = new int[9];
     //是否已经完成地图的生成
-    private static boolean isOk = true;
+    private boolean isOk = true;
 
     /**
      * 挖空数独,生成数独题目
@@ -22,7 +22,29 @@ public class GenerateMapUtil {
      * @return 数独题目
      */
     public int[][] maskCells(int[][] array) {
-        int level = 1;
+        int min = 20;
+        int max = 15;
+        Random random = new Random();
+        int count = random.nextInt(max) + min;
+        for(int i=0;i<count;i++) {
+            do {
+                int n = random.nextInt(9);
+                int m = random.nextInt(9);
+                if(array[n][m] > 0) {
+                    array[n][m] = 0;
+                    break;
+                }
+            }while(true);
+        }
+        return array;
+    }
+
+    /**
+     * 挖空数独,生成数独题目
+     * @param array 终盘数独
+     * @return 数独题目
+     */
+    public int[][] maskCells(int[][] array,int level) {
         int min, max;
         int LEVEL_MAX = 10;
         level %= LEVEL_MAX;
@@ -142,7 +164,7 @@ public class GenerateMapUtil {
     /*
      * 清空第i个小九宫格中的num
      */
-    private static void clearNum(int i, int num) {
+    private void clearNum(int i, int num) {
         for (int j = 0; j < 9; j++) {
             // 当前小方格横坐标
             int ii = (i / 3) * 3 + j / 3;
@@ -159,7 +181,7 @@ public class GenerateMapUtil {
     /*
      * 得到当前小九宫格可以放入数字num的位置数目
      */
-    private static int getCanPutSum(int i, int num) {
+    private int getCanPutSum(int i, int num) {
         int sum = 0;
         // 遍历小九宫格
         for (int j = 0; j < 9; j++) {
@@ -180,7 +202,7 @@ public class GenerateMapUtil {
     /*
      * 指定横纵坐标点是否可以放置num
      */
-    private static boolean isCanPut(int ii, int jj, int num) {
+    private boolean isCanPut(int ii, int jj, int num) {
         // 判断指定坐标点的同行或同列是否有相同数字，要是有则为false
         for (int i = 0; i < 9; i++) {
             if (maps[ii][i] == num) {

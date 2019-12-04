@@ -30,15 +30,13 @@ public class GameView extends View {
     private int phoneWidth;
     /** 当前格子的宽度 **/
     private int cellWidth;
-    /** 白线 **/
+    /** 深色灰线 **/
     private Paint mLinePaint;
-    /** 白线 **/
+    /** 浅色色灰线 **/
     private Paint linePaint;
-    /** 浅蓝色的方格子 **/
-//    private Paint mDarkPaint;
     /** 用户点击 浅绿色的格子 **/
     private Paint mOptDarkPaint;
-    /** 原始数据 数字 **/
+    /** 原始数据 **/
     private Paint numberPaint;
     /** 用户填写的数字 **/
     private Paint changePaint;
@@ -104,21 +102,17 @@ public class GameView extends View {
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setStrokeWidth(2f);
 
-        /*mDarkPaint = new Paint();
-        mDarkPaint.setColor(Color.parseColor("#52E7CD"));
-        mDarkPaint.setStyle(Paint.Style.FILL);*/
-
         numberPaint = new Paint();
         numberPaint.setColor(Color.rgb(149,90,46));
         numberPaint.setTextSize(cellWidth * 0.65f);
         numberPaint.setTextAlign(Paint.Align.CENTER);
-//        numberPaint.setShadowLayer(10F, -5F, 8F, Color.parseColor("#999999"));
         numberPaint.setAntiAlias(true);
 
         mOptPaint = new Paint();
         mOptPaint.setColor(Color.rgb(149,90,46));
         mOptPaint.setTextSize(cellWidth * 0.65f+15);
         mOptPaint.setTextAlign(Paint.Align.CENTER);
+        //阴影
         mOptPaint.setShadowLayer(10F, -5F, 8F, Color.parseColor("#999999"));
         mOptPaint.setAntiAlias(true);
 
@@ -137,7 +131,6 @@ public class GameView extends View {
         errorNumberPaint.setAntiAlias(true);
 
         mOptDarkPaint = new Paint();
-//        mOptDarkPaint.setColor(Color.parseColor("#52E76E"));
         mOptDarkPaint.setColor(Color.rgb(240,189,107));
         mOptDarkPaint.setStyle(Paint.Style.FILL);
 
@@ -225,7 +218,7 @@ public class GameView extends View {
             }
         }*/
 
-        // 画白线
+        // 画深色线
         for (int i = 0; i < 10; i+=3) {
                 canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,
                         cellWidth * i + 1 + layout_y, mLinePaint);
@@ -233,7 +226,7 @@ public class GameView extends View {
                         + 20, 9 * cellWidth + layout_y, mLinePaint);
         }
 
-        // 画白线
+        // 画浅色线
         for (int i = 0; i < 10; i++) {
             if (!(i == 0 || i == 3 || i == 6 || i == 9)){
                 canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,

@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
 import com.mbp.sudoku.util.DataBaseHelper;
+import com.mbp.sudoku.util.DatabaseUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
         initDatabase();
 
         //获取最后一次游戏关卡
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(this,"ShuDu.db",null,1);
-        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
+        SQLiteDatabase database = DatabaseUtil.getDatabase(this);
         Cursor cursor = database.query("tb_end_speed",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             level = cursor.getInt(0);

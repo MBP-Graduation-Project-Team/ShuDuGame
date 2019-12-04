@@ -55,14 +55,4 @@ public class GameMap {
         this.goodTime = goodTime;
     }
 
-    @Override
-    public String toString() {
-        return "GameMap{" +
-                "id=" + id +
-                ", gameMap='" + gameMap + '\'' +
-                ", mapStatus='" + mapStatus + '\'' +
-                ", goodTime='" + goodTime + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }
