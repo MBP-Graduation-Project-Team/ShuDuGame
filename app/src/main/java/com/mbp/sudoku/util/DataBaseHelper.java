@@ -17,8 +17,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /** 建表语句 **/
     private static final String CREATE__GAME_MAP = "Create table tb_game_map(" +
             "level integer primary key autoincrement NOT NULL," +
-            "" +
-            " text NOT NULL," +
+            "original_map text NOT NULL," +
             "game_map text NOT NULL," +
             "status integer NOT NULL DEFAULT -1," +
             "good_time integer NOT NULL DEFAULT 0" +
