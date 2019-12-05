@@ -42,6 +42,7 @@ public class GenerateMapUtil {
     /**
      * 挖空数独,生成数独题目
      * @param array 终盘数独
+     * @param level 难度从低到高1-10
      * @return 数独题目
      */
     public int[][] maskCells(int[][] array,int level) {
@@ -129,7 +130,7 @@ public class GenerateMapUtil {
                             //maps[(int) (Math.floor(used[i-1]/3)+Math.floor((i-1)/3)*3)][used[i-1]%3+((i-1)%3)*3]=-1;
                             clearNum(i - 1, num);
                         }
-                        // i回退一个，因为等会for循环灰给i加一，所以这里减2
+                        // i回退一个，因为等会for循环会给i加一，所以这里减2
                         i -= 2;
                         continue;
                     } else {
@@ -152,13 +153,10 @@ public class GenerateMapUtil {
                             canPutSum[i] -= 1;
                             flag = true;
                         }
-
                     }
                 }
-
             }
         }
-
     }
 
     /*
@@ -175,7 +173,6 @@ public class GenerateMapUtil {
                 maps[ii][jj] = -1;
             }
         }
-
     }
 
     /*
