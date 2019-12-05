@@ -2,7 +2,7 @@ package com.mbp.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +13,6 @@ import android.widget.Button;
 
 import com.mbp.sudoku.activity.CheckPointActivity;
 import com.mbp.sudoku.activity.GameActivity;
-import com.mbp.sudoku.util.DataBaseHelper;
 import com.mbp.sudoku.util.DatabaseUtil;
 
 import java.io.File;
@@ -74,10 +73,9 @@ public class MainActivity extends AppCompatActivity {
      * 初始化数据库
      */
     void initDatabase(){
-        // com.mbp.sudoku 是程序的包名，请根据自己的程序调整
         // databases 目录是准备放 SQLite 数据库的地方，也是 Android 程序默认的数据库存储目录
         // 数据库名为 ShuDu.db
-        final String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
+        @SuppressLint("SdCardPath") final String DB_PATH = "/data/data/com.mbp.sudoku/databases/";
         final String DB_NAME = "ShuDu.db";
 
         // 检查 SQLite 数据库文件是否存在
