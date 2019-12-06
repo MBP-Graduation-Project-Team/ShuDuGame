@@ -90,7 +90,9 @@ public class GameView extends View {
         invalidate();
     }
 
-    //设定画笔颜色,风格,大小
+    /**
+     * 设定画笔颜色,风格,大小
+     */
     private void initPaint() {
         mLinePaint = new Paint();
         mLinePaint.setColor(Color.rgb(198,131,46));
@@ -186,14 +188,7 @@ public class GameView extends View {
      */
     private void drawTrueText(Canvas canvas) {
 
-        // 画平行四边形
         float startY = phoneWidth + layout_y;
-        /*canvas.drawLine(50, startY, phoneWidth -50, startY, mLinePaint);
-        canvas.drawLine(10, startY + cellWidth - 40, phoneWidth -10, startY + cellWidth -40, mLinePaint);
-        canvas.drawLine(50, startY, 10, startY + cellWidth - 40, mLinePaint);
-        canvas.drawLine(phoneWidth -50, startY, phoneWidth -10, startY + cellWidth -40, mLinePaint);*/
-
-        //画出候选区文字
         float y = (cellWidth - 30)/2.0f;
         for (int i = 0; i < 9; i++) {
             canvas.drawText(Integer.toString(i + 1), i * cellWidth + tCX + 20, startY + (cellWidth - tCY) - y, mOptPaint);
@@ -205,19 +200,6 @@ public class GameView extends View {
      * @param canvas 画布
      */
     private void drawBoard(Canvas canvas) {
-        // 画底色
-        /*for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                int x = i / 3;
-                int y = j / 3;
-                if ((x == 0 || x == 2) && (y == 0 || y == 2)) {
-                    canvas.drawRect(cellWidth * j + 20, layout_y + cellWidth * i, cellWidth * j + 20 + cellWidth, layout_y + cellWidth * i + cellWidth, mDarkPaint);
-                } else if (y == 1 && x == 1) {
-                    canvas.drawRect(cellWidth * j + 20, layout_y + cellWidth * i, cellWidth * j + 20 + cellWidth, layout_y + cellWidth * i + cellWidth, mDarkPaint);
-                }
-            }
-        }*/
-
         // 画深色线
         for (int i = 0; i < 10; i+=3) {
                 canvas.drawLine(20, cellWidth * i + 1 + layout_y, 9 * cellWidth + 20,
