@@ -340,41 +340,4 @@ public class GameView extends View {
     public static void setErrorCount(int errorCount) {
         GameView.errorCount = errorCount;
     }
-
-    /**
-     * 保存游戏进度
-     * @param level 关卡编号
-     * @param time 时间
-     */
-    protected void saveSpeed(int level,int time) {
-        Log.d("GameView","保存游戏进度");
-        //获取通关状态
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext(),"ShuDu.db",null,1);
-        SQLiteDatabase database = dataBaseHelper.getWritableDatabase();
-        Gson gson = new Gson();
-        String mapJson = gson.toJson(MapUtil.getCutData());
-        //判断是否存在游戏进度
-        Cursor cursor1 = database.rawQuery("select game_speed from tb_game_speed where level = ?",new String[]{String.valueOf(level)});
-        //不存在游戏进度
-        if (cursor1.getCount() == 0){
-            Log.d("","不存在游戏进度");
-            ContentValues values = new ContentValues();
-            values.put("level", level);
-            values.put("game_speed", mapJson);
-            values.put("now_time", time);
-            values.put("error_number", GameView.getErrorCount());
-            database.insert("tb_game_speed", null, values);
-        }
-        //存在游戏进度
-        else {
-            Log.d("","存在游戏进度");
-            //更新数据
-            ContentValues values = new ContentValues();
-            values.put("game_speed", mapJson);
-            values.put("now_time", time);
-            values.put("error_number", GameView.getErrorCount());
-            database.update("tb_game_speed", values,"level = ?", new String[]{String.valueOf(level)});
-        }
-        cursor1.close();
-    }
 }
